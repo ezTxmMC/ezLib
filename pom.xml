@@ -6,7 +6,7 @@
 
     <groupId>dev.eztxm</groupId>
     <artifactId>ezTxmAPI</artifactId>
-    <version>1.0-Beta7</version>
+    <version>1.0-PRE</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -16,15 +16,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.41.0.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20230227</version>
         </dependency>
+        <dependency>
+            <groupId>dev.eztxm.sql</groupId>
+            <artifactId>SQL-API</artifactId>
+            <version>1.2.1</version>
+        </dependency>
     </dependencies>
-
 </project>
