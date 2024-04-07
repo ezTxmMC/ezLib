@@ -1,4 +1,4 @@
-```
+```xml
 <repository>
   <id>nyfplexmc-repo-releases</id>
   <name>NyfplexMC</name>
