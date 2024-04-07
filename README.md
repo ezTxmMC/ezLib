@@ -6,7 +6,7 @@
 </repository>
 ```
 
-```
+```xml
 <dependency>
   <groupId>dev.eztxm</groupId>
   <artifactId>ezTxmAPI</artifactId>
