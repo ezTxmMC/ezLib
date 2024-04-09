@@ -4,7 +4,7 @@
 <repository>
   <id>nyfplexmc-repo-releases</id>
   <name>NyfplexMC</name>
-  <url>http://repo.nyfplex.com:2231/releases</url>
+  <url>http://mc.nyfplex.com:8080/releases</url>
 </repository>
 ```
 
