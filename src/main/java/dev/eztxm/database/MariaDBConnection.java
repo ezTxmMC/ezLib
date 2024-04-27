@@ -1,24 +1,37 @@
 package dev.eztxm.database;
 
-import java.sql.*;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.pool.HikariPool;
+import dev.eztxm.database.util.Arguments;
+import lombok.Getter;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Timer;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+@Getter
 public class MariaDBConnection {
-    private Connection connection;
+
     private Timer timer;
-    private final String host;
-    private final int port;
-    private final String database;
-    private final String username;
-    private final String password;
+    @Getter
+    private HikariPool pool;
+    private final HikariConfig config;
+    private final ExecutorService service;
 
     public MariaDBConnection(String host, int port, String database, String username, String password) {
-        this.host = host;
-        this.port = port;
-        this.database = database;
-        this.username = username;
-        this.password = password;
+
+        this.config = new HikariConfig();
+        config.setConnectionTimeout(7500L);
+        config.setMaximumPoolSize(8);
+        config.setMinimumIdle(1);
+        config.setJdbcUrl(String.format("jdbc:mysql://%s:%s/%s?serverTimezone=UTC&useLegacyDatetimeCode=false&autoReconnect=true", host, port, database));
+        config.setUsername(username);
+        config.setPassword(password);
         connect();
 
         this.service = Executors.newCachedThreadPool();
@@ -55,11 +68,15 @@ public class MariaDBConnection {
     }
 
     public void connect() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
+        this.pool = new HikariPool(config);
+        try (Connection connection = pool.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT 1"); /* ping */
+            statement.setQueryTimeout(15);
+            statement.executeQuery();
             System.out.println("Successfully to connect to database.");
         } catch (SQLException e) {
-            System.out.println("Failed to connect to database.");
+            System.out.println("Can't connect to the database, check your inputs or your database:\n");
+            e.fillInStackTrace();
         }
     }
 
@@ -79,7 +96,7 @@ public class MariaDBConnection {
         Arguments.set(objects, preparedStatement);
     }
 
-    public Connection getConnection() {
-        return connection;
+    public CompletableFuture<HikariPool> getPoolAsync() {
+        return CompletableFuture.supplyAsync(this::getPool, service);
     }
 }
