@@ -1,111 +1,40 @@
 package dev.eztxm.database;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.pool.HikariPool;
 import dev.eztxm.database.util.Arguments;
+import lombok.Getter;
 
 import java.io.File;
 import java.sql.*;
 import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SQLiteConnection {
-    private Connection connection;
+
     private Timer timer;
-    private final String path;
-    private final String fileName;
+    @Getter
+    private HikariPool pool;
+    private final HikariConfig config;
+    private final ExecutorService service;
 
     public SQLiteConnection(String path, String fileName) {
-        this.path = path;
-        this.fileName = fileName;
         if (!new File(path).exists()) new File(path).mkdirs();
+        this.config = new HikariConfig();
+        config.setConnectionTimeout(7500L);
+        config.setMaximumPoolSize(8);
+        config.setMinimumIdle(1);
+        config.setJdbcUrl(String.format("jdbc:sqlite:%s/%s", path, fileName));
         connect();
-        this.timer = new Timer();
-        this.timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                checkConnection();
-            }
-        }, 10000L, 5000L);
-    }
 
-    private void connect() {
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + path + "/" + fileName);
-            System.out.println("Successfully to connect to database.");
-        } catch (SQLException e) {
-            System.out.println("Failed to connect to database.");
-        }
-    }
-
-    public void createTable(String tableName, String columns) {
-        put("CREATE TABLE IF NOT EXISTS " + tableName + " (" + columns + ")");
-    }
-
-    public void update(String tableName, String column, Object value, String condition) {
-        put("UPDATE " + tableName + " SET " + column + " = " + value + " WHERE " + condition);
-    }
-
-    public void insertInto(String tableName, String values) {
-        put("INSERT INTO " + tableName + " VALUES (" + values + ")");
-    }
-
-    public void deleteFrom(String tableName, String condition) {
-        put("DELETE FROM " + tableName + " WHERE " + condition);
-    }
-
-    public ResultSet select(String tableName, String columns, String condition, boolean needsCondition) {
-        return query("SELECT " + columns + " FROM " + tableName + (needsCondition ? " WHERE " + condition : ""));
-    }
-
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.fillInStackTrace();
-        }
-    }
-
-    private void checkConnection() {
-        if (connection == null) {
-            System.out.println("Connection lost. Reconnecting...");
-            reconnect();
-            return;
-        }
-        try {
-            if (!connection.isValid(1)) {
-                System.out.println("Connection lost. Reconnecting...");
-                reconnect();
-            }
-        } catch (SQLException e) {
-            System.out.println("Connection lost. Reconnecting...");
-            reconnect();
-        }
-    }
-
-    private void reconnect() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            connection = null;
-        }
-        connect();
-    }
-
-    public void stopChecking() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.fillInStackTrace();
-        }
-        System.out.println("Connection checking stopped.");
+        this.service = Executors.newCachedThreadPool();
     }
 
     public ResultSet query(String sql, Object... objects) {
-        try {
-            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        try (Connection connection = pool.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             setArguments(objects, preparedStatement);
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
@@ -115,8 +44,8 @@ public class SQLiteConnection {
     }
 
     public void put(String sql, Object... objects) {
-        try {
-            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        try (Connection connection = pool.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             setArguments(objects, preparedStatement);
             preparedStatement.execute();
             preparedStatement.close();
@@ -125,11 +54,44 @@ public class SQLiteConnection {
         }
     }
 
+    public CompletableFuture<ResultSet> queryAsync(String sql, Object... objects) {
+        return CompletableFuture.supplyAsync(() -> query(sql, objects), service);
+    }
+
+    public CompletableFuture<Void> putAsync(String sql, Object... objects) {
+        return CompletableFuture.runAsync(() -> put(sql, objects), service);
+    }
+
+    public void connect() {
+        this.pool = new HikariPool(config);
+        try (Connection connection = pool.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT 1"); /* ping */
+            statement.setQueryTimeout(15);
+            statement.executeQuery();
+            System.out.println("Successfully to connect to database.");
+        } catch (SQLException e) {
+            System.out.println("Can't connect to the database, check your inputs or your database:\n");
+            e.fillInStackTrace();
+        }
+    }
+
+    public void close() {
+        try {
+            pool.shutdown();
+        } catch (InterruptedException e) {
+            e.fillInStackTrace();
+        }
+    }
+
+    public CompletableFuture<Void> closeAsync() {
+        return CompletableFuture.runAsync(this::close, service);
+    }
+
     private void setArguments(Object[] objects, PreparedStatement preparedStatement) throws SQLException {
         Arguments.set(objects, preparedStatement);
     }
 
-    public Connection getConnection() {
-        return connection;
+    public CompletableFuture<HikariPool> getPoolAsync() {
+        return CompletableFuture.supplyAsync(this::getPool, service);
     }
 }
