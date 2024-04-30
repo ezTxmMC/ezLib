@@ -32,108 +32,18 @@ public class JsonConfig {
         }
     }
 
-    public String getString(String key) {
+    public void set(String key, Object value) {
+        this.config.put(key, value);
+        saveConfig();
+    }
+
+    public ObjectFormatter get(String key) {
         try {
-            return this.config.getString(key);
+            Object object = this.config.get(key);
+            return new ObjectFormatter(object);
         } catch (JSONException e) {
             return null;
         }
-    }
-
-    public void setString(String key, String value) {
-        this.config.put(key, value);
-        saveConfig();
-    }
-
-    public int getInteger(String key) {
-        try {
-            return this.config.getInt(key);
-        } catch (JSONException e) {
-            return -1;
-        }
-    }
-
-    public void setInteger(String key, int value) {
-        this.config.put(key, value);
-        saveConfig();
-    }
-
-    public long getLong(String key) {
-        try {
-            return this.config.getLong(key);
-        } catch (JSONException e) {
-            return -1;
-        }
-    }
-
-    public void setLong(String key, long value) {
-        this.config.put(key, value);
-        saveConfig();
-    }
-
-    public double getDouble(String key) {
-        try {
-            return this.config.getDouble(key);
-        } catch (JSONException e) {
-            return -1;
-        }
-    }
-
-    public void setDouble(String key, double value) {
-        this.config.put(key, value);
-        saveConfig();
-    }
-
-    public float getFloat(String key) {
-        try {
-            return this.config.getFloat(key);
-        } catch (JSONException e) {
-            return -1;
-        }
-    }
-
-    public void setFloat(String key, float value) {
-        this.config.put(key, value);
-        saveConfig();
-    }
-
-    public boolean getBoolean(String key) {
-        try {
-            return this.config.getBoolean(key);
-        } catch (JSONException e) {
-            return false;
-        }
-    }
-
-    public void setBoolean(String key, boolean value) {
-        this.config.put(key, value);
-        saveConfig();
-    }
-
-    public JSONObject getJsonObject(String key) {
-        try {
-            return this.config.getJSONObject(key);
-        } catch (JSONException e) {
-            return null;
-        }
-    }
-
-    public void setJsonObject(String key, JSONObject value) {
-        this.config.put(key, value);
-        saveConfig();
-    }
-
-    public JSONArray getJsonArray(String key) {
-        try {
-            return this.config.getJSONArray(key);
-        } catch (JSONException e) {
-            return null;
-        }
-    }
-
-    public void setJsonArray(String key, JSONArray value) {
-        this.config.put(key, value);
-        saveConfig();
     }
 
     public void remove(String key) {
@@ -164,5 +74,36 @@ public class JsonConfig {
             throw new RuntimeException(e);
         }
         return stringBuilder.toString();
+    }
+
+    public record ObjectFormatter(Object object) {
+
+        public String asString() {
+            return object.toString();
+        }
+
+        public boolean asBoolean() {
+            return (boolean) object;
+        }
+
+        public int asInteger() {
+            return (int) object;
+        }
+
+        public double asDouble() {
+            return (double) object;
+        }
+
+        public float asFloat() {
+            return (float) object;
+        }
+
+        public JSONObject asJsonObject() {
+            return (JSONObject) object;
+        }
+
+        public JSONArray asJsonArray() {
+            return (JSONArray) object;
+        }
     }
 }
