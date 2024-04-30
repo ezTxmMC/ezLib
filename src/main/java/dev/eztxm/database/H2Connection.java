@@ -7,24 +7,27 @@ import dev.eztxm.database.util.IConnection;
 import lombok.Getter;
 
 import java.io.File;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class SQLiteConnection implements IConnection {
+public class H2Connection implements IConnection {
     @Getter
     private HikariPool pool;
     private final HikariConfig config;
     private final ExecutorService service;
 
-    public SQLiteConnection(String path, String fileName) {
+    public H2Connection(String path, String fileName) {
         if (!new File(path).exists()) new File(path).mkdirs();
         this.config = new HikariConfig();
         config.setConnectionTimeout(7500L);
         config.setMaximumPoolSize(8);
         config.setMinimumIdle(1);
-        config.setJdbcUrl(String.format("jdbc:sqlite:%s/%s", path, fileName));
+        config.setJdbcUrl(String.format("jdbc:h2:file:%s:%s", path, fileName));
         connect();
 
         this.service = Executors.newCachedThreadPool();

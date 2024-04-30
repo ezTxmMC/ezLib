@@ -3,21 +3,19 @@ package dev.eztxm.database;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.pool.HikariPool;
 import dev.eztxm.database.util.Arguments;
+import dev.eztxm.database.util.IConnection;
 import lombok.Getter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Timer;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Getter
-public class MariaDBConnection {
-
-    private Timer timer;
+public class MariaDBConnection implements IConnection {
     @Getter
     private HikariPool pool;
     private final HikariConfig config;
