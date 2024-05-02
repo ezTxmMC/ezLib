@@ -9,7 +9,7 @@
     - Properties (WIP)
     - Toml (WIP)
     - Yaml (WIP)
-- Easy Databases
+- Easy Databases:
     - MariaDB
     - MongoDB (WIP)
     - SQLite
