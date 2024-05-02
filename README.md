@@ -59,7 +59,7 @@ Get the Tag from https://jitpack.io/#ezTxmMC/ezLib
 JsonConfig jsonConfig = new JsonConfig("path", "fileName");
 ```
 
-This will create a json file in the`path`directory with the`fileName`from the variable.
+This will create a json file in the `path` directory with the `fileName` from the variable.
 
 ### Json Config - Set
 
@@ -67,11 +67,11 @@ This will create a json file in the`path`directory with the`fileName`from the va
 jsonConfig.set("key", value);
 ```
 
-This will set a register with the`key`variable and the`value`variable.
+This will set a register with the `key` variable and the `value` variable.
 
-The`key`and`value`variables should be replaced with a unique key and value for your config file.
+The `key` and `value` variables should be replaced with a unique key and value for your config file.
 
-The`value`variable can be everything, but we recommend the values in Object-Converter.
+The `value` variable can be everything, but we recommend the values in Object-Converter.
 
 ### Json Config - Remove
 
@@ -79,9 +79,9 @@ The`value`variable can be everything, but we recommend the values in Object-Conv
 jsonConfig.remove("key");
 ```
 
-This will remove the register with the`key`variable.
+This will remove the register with the `key` variable.
 
-The`key`variable should be replaced with a unique key of your config file.
+The `key` variable should be replaced with a unique key of your config file.
 
 ### Json Config - To JsonObject
 
