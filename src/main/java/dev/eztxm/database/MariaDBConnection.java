@@ -27,7 +27,7 @@ public class MariaDBConnection implements SQLConnection {
         config.setConnectionTimeout(7500L);
         config.setMaximumPoolSize(8);
         config.setMinimumIdle(1);
-        config.setJdbcUrl(String.format("jdbc:mysql://%s:%s/%s?serverTimezone=UTC&useLegacyDatetimeCode=false&autoReconnect=true", host, port, database));
+        config.setJdbcUrl(String.format("jdbc:mariadb://%s:%s/%s?autoReconnect=true", host, port, database));
         config.setUsername(username);
         config.setPassword(password);
         connect();
