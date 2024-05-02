@@ -4,12 +4,11 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import dev.eztxm.database.util.SQLConnection;
 import org.bson.Document;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MongoDBConnection implements SQLConnection {
+public class MongoDBConnection {
     private final MongoDatabase mongoDatabase;
 
     public MongoDBConnection(String host, int port, String username, String password, String database) {
