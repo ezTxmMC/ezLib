@@ -29,6 +29,7 @@
     <url>https://jitpack.io</url>
 </repository>
 ```
+
 ### Dependency
 
 ```xml
@@ -45,6 +46,8 @@
 ```groovy
 maven { url 'https://jitpack.io' }
 ```
+### Dependency
+
 ```groovy
 implementation 'com.github.ezTxmMC:ezLib:Tag'
 ```
