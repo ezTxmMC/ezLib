@@ -1,11 +1,10 @@
 package dev.eztxm.logger;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class SimpleLogger {
     private final String prefix;
-
-    public SimpleLogger(String prefix) {
-        this.prefix = prefix;
-    }
 
     public void info(String message) {
         System.out.println(LoggerColor.ANSI_WHITE + prefix + message);
