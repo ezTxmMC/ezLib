@@ -1,4 +1,4 @@
-# ezLib
+# ezLib - Your simplify java lib
 
 [![](https://jitpack.io/v/ezTxmMC/ezLib.svg)](https://jitpack.io/#ezTxmMC/ezLib)
 
