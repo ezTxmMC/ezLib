@@ -1,7 +1,7 @@
 package dev.eztxm.config;
 
-import dev.eztxm.config.util.ObjectFormatter;
-import org.json.JSONArray;
+import dev.eztxm.object.JsonObject;
+import dev.eztxm.object.ObjectFormatter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,7 +11,7 @@ import java.io.*;
 public class JsonConfig {
     private final String configPath;
     private final String configName;
-    private final JSONObject config;
+    private final JSONObject jsonObject;
 
     public JsonConfig(String path, String configName) {
         this.configPath = path;
@@ -22,25 +22,25 @@ public class JsonConfig {
         if (!configFile.exists()) {
             try {
                 configFile.createNewFile();
-                this.config = new JSONObject();
-                saveConfig();
+                this.jsonObject = new JSONObject();
+                save();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         } else {
             String configJson = readFile(path + "/" + this.configName);
-            this.config = new JSONObject(configJson);
+            this.jsonObject = new JSONObject(configJson);
         }
     }
 
     public void set(String key, Object value) {
-        this.config.put(key, value);
-        saveConfig();
+        this.jsonObject.put(key, value);
+        save();
     }
 
     public ObjectFormatter get(String key) {
         try {
-            Object object = this.config.get(key);
+            Object object = this.jsonObject.get(key);
             return new ObjectFormatter(object);
         } catch (JSONException e) {
             return null;
@@ -48,17 +48,17 @@ public class JsonConfig {
     }
 
     public void remove(String key) {
-        this.config.remove(key);
-        saveConfig();
+        this.jsonObject.remove(key);
+        save();
     }
 
-    public JSONObject toJSONObject() {
-        return config;
+    public JsonObject toJsonObject() {
+        return new JsonObject(this, jsonObject);
     }
 
-    private void saveConfig() {
+    public void save() {
         try (FileWriter file = new FileWriter(configPath + "/" + configName)) {
-            file.write(this.config.toString());
+            file.write(this.jsonObject.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

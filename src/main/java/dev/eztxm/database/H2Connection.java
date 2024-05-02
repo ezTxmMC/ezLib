@@ -3,7 +3,7 @@ package dev.eztxm.database;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.pool.HikariPool;
 import dev.eztxm.database.util.Arguments;
-import dev.eztxm.database.util.IConnection;
+import dev.eztxm.database.util.SQLConnection;
 import lombok.Getter;
 
 import java.io.File;
@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class H2Connection implements IConnection {
+public class H2Connection implements SQLConnection {
     @Getter
     private HikariPool pool;
     private final HikariConfig config;

@@ -7,18 +7,19 @@ public class SimpleLogger {
         this.prefix = prefix;
     }
 
-    public SimpleLogger info(String message) {
+    public void info(String message) {
         System.out.println(LoggerColor.ANSI_WHITE + prefix + message);
-        return this;
     }
 
-    public SimpleLogger warn(String message) {
+    public void marked(String message) {
+        System.out.println(LoggerColor.ANSI_GREEN + prefix + message);
+    }
+
+    public void warn(String message) {
         System.out.println(LoggerColor.ANSI_YELLOW + prefix + message);
-        return this;
     }
 
-    public SimpleLogger error(String message) {
+    public void error(String message) {
         System.out.println(LoggerColor.ANSI_RED + prefix + message);
-        return this;
     }
 }

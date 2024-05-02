@@ -3,7 +3,7 @@ package dev.eztxm.database;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.pool.HikariPool;
 import dev.eztxm.database.util.Arguments;
-import dev.eztxm.database.util.IConnection;
+import dev.eztxm.database.util.SQLConnection;
 import lombok.Getter;
 
 import java.sql.Connection;
@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Getter
-public class PostgreSQLConnection implements IConnection {
+public class PostgreSQLConnection implements SQLConnection {
     @Getter
     private HikariPool pool;
     private final HikariConfig config;
@@ -35,6 +35,7 @@ public class PostgreSQLConnection implements IConnection {
         this.service = Executors.newCachedThreadPool();
     }
 
+    @Override
     public ResultSet query(String sql, Object... objects) {
         try (Connection connection = pool.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -46,6 +47,7 @@ public class PostgreSQLConnection implements IConnection {
         return null;
     }
 
+    @Override
     public void put(String sql, Object... objects) {
         try (Connection connection = pool.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -57,15 +59,17 @@ public class PostgreSQLConnection implements IConnection {
         }
     }
 
+    @Override
     public CompletableFuture<ResultSet> queryAsync(String sql, Object... objects) {
         return CompletableFuture.supplyAsync(() -> query(sql, objects), service);
     }
 
+    @Override
     public CompletableFuture<Void> putAsync(String sql, Object... objects) {
         return CompletableFuture.runAsync(() -> put(sql, objects), service);
     }
 
-    public void connect() {
+    private void connect() {
         this.pool = new HikariPool(config);
         try (Connection connection = pool.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement("SELECT 1"); /* ping */
@@ -78,6 +82,7 @@ public class PostgreSQLConnection implements IConnection {
         }
     }
 
+    @Override
     public void close() {
         try {
             pool.shutdown();
@@ -86,6 +91,7 @@ public class PostgreSQLConnection implements IConnection {
         }
     }
 
+    @Override
     public CompletableFuture<Void> closeAsync() {
         return CompletableFuture.runAsync(this::close, service);
     }
@@ -94,6 +100,7 @@ public class PostgreSQLConnection implements IConnection {
         Arguments.set(objects, preparedStatement);
     }
 
+    @Override
     public CompletableFuture<HikariPool> getPoolAsync() {
         return CompletableFuture.supplyAsync(this::getPool, service);
     }
