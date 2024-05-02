@@ -27,7 +27,7 @@ public class H2Connection implements SQLConnection {
         config.setConnectionTimeout(7500L);
         config.setMaximumPoolSize(8);
         config.setMinimumIdle(1);
-        config.setJdbcUrl(String.format("jdbc:h2:/%s/%s", path, fileName));
+        config.setJdbcUrl(String.format("jdbc:h2:%s/%s", System.getProperty("user.dir") + "/" + path, fileName));
         connect();
 
         this.service = Executors.newCachedThreadPool();
