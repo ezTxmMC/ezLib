@@ -39,6 +39,9 @@
     <version>Tag</version>
 </dependency>
 ```
+
+Get the Tag from https://jitpack.io/#ezTxmMC/ezLib
+
 ## Gradle
 
 ### Repository
