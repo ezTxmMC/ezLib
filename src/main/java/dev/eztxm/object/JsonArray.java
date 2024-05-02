@@ -33,7 +33,7 @@ public class JsonArray {
         }
     }
 
-    public ObjectFormatter get(String key) {
+    public ObjectConverter get(String key) {
         try {
             Object object = null;
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -43,7 +43,7 @@ public class JsonArray {
                     break;
                 }
             }
-            return new ObjectFormatter(object);
+            return new ObjectConverter(object);
         } catch (JSONException | NullPointerException e) {
             return null;
         }

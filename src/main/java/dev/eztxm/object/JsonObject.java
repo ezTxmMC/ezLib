@@ -28,10 +28,10 @@ public class JsonObject {
         jsonConfig.save();
     }
 
-    public ObjectFormatter get(String key) {
+    public ObjectConverter get(String key) {
         try {
             Object object = jsonObject.get(key);
-            return new ObjectFormatter(object);
+            return new ObjectConverter(object);
         } catch (JSONException e) {
             return null;
         }

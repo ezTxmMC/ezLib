@@ -1,7 +1,7 @@
 package dev.eztxm.config;
 
 import dev.eztxm.object.JsonObject;
-import dev.eztxm.object.ObjectFormatter;
+import dev.eztxm.object.ObjectConverter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,10 +38,10 @@ public class JsonConfig {
         save();
     }
 
-    public ObjectFormatter get(String key) {
+    public ObjectConverter get(String key) {
         try {
             Object object = this.jsonObject.get(key);
-            return new ObjectFormatter(object);
+            return new ObjectConverter(object);
         } catch (JSONException e) {
             return null;
         }

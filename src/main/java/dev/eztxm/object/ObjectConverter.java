@@ -2,16 +2,16 @@ package dev.eztxm.object;
 
 import dev.eztxm.config.JsonConfig;
 
-public class ObjectFormatter {
+public class ObjectConverter {
     private final JsonConfig jsonConfig;
     private final Object object;
 
-    public ObjectFormatter(JsonConfig jsonConfig, Object object) {
+    public ObjectConverter(JsonConfig jsonConfig, Object object) {
         this.jsonConfig = jsonConfig;
         this.object = object;
     }
 
-    public ObjectFormatter(Object object) {
+    public ObjectConverter(Object object) {
         this.jsonConfig = null;
         this.object = object;
     }
