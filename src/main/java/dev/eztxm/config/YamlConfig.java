@@ -51,6 +51,12 @@ public class YamlConfig implements Config {
     }
 
     @Override
+    public void addDefault(String key, Object value) {
+        if (get(key) != null) return;
+        set(key, value);
+    }
+
+    @Override
     public void save() {
         try {
             String output = yaml.dump(this.data);
