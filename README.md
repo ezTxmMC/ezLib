@@ -49,7 +49,7 @@ Groovy:
 ```groovy
 repositories {
     mavenCentral()
-	maven {
+    maven {
         url 'https://jitpack.io'
     }
 }
