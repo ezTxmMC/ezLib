@@ -6,15 +6,15 @@
 
 - Easy Configs:
   - Json
-  - Properties (WIP)
   - Toml (WIP)
   - Yaml (WIP)
+  - Properties (WIP)
 - Easy Databases:
   - H2
+  - SQLite
   - MariaDB
   - MongoDB (WIP)
   - PostgreSQL
-  - SQLite
 - Object Converter
 - Better JsonObject and JsonArray
 - Simplified Logger
