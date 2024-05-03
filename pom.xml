@@ -6,7 +6,7 @@
 
     <groupId>dev.eztxm</groupId>
     <artifactId>ezLib</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-ALPHA4</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

@@ -5,54 +5,71 @@
 ## Features
 
 - Easy Configs:
-    - Json
-    - Properties (WIP)
-    - Toml (WIP)
-    - Yaml
+  - Json
+  - Properties (WIP)
+  - Toml (WIP)
+  - Yaml
 - Easy Databases:
-    - MariaDB
-    - MongoDB (WIP)
-    - SQLite
-    - PostgreSQL
-    - H2
+  - MariaDB
+  - MongoDB (WIP)
+  - SQLite
+  - PostgreSQL
+  - H2
 - Object Converter
 - Better JsonObject and JsonArray
 - Simplified Logger
 
-## Maven
+## Dependency
 
-### Repository
-
-```xml
-<repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
-</repository>
-```
-
-### Dependency
+### Maven
 
 ```xml
-<dependency>
-    <groupId>com.github.ezTxmMC</groupId>
-    <artifactId>ezLib</artifactId>
-    <version>Tag</version>
-</dependency>
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.github.ezTxmMC</groupId>
+        <artifactId>ezLib</artifactId>
+        <version>Tag</version>
+    </dependency>
+</dependencies>
 ```
 
 Get the Tag from https://jitpack.io/#ezTxmMC/ezLib
 
-## Gradle
+### Gradle
 
-### Repository
+Groovy:
 
 ```groovy
-maven { url 'https://jitpack.io' }
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    implementation 'com.github.ezTxmMC:ezLib:Tag'
+}
 ```
-### Dependency
 
-```groovy
-implementation 'com.github.ezTxmMC:ezLib:Tag'
+Kotlin:
+
+```kotlin
+repositories {
+    mavenCentral()
+    maven("https://jitpack.io")
+}
+
+dependencies {
+    implementation("com.github.ezTxmMC:ezLib:Tag")
+}
 ```
 
 Get the Tag from https://jitpack.io/#ezTxmMC/ezLib
