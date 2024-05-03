@@ -1,5 +1,6 @@
 package dev.eztxm.config;
 
+import dev.eztxm.config.util.Config;
 import dev.eztxm.object.JsonObject;
 import dev.eztxm.object.ObjectConverter;
 import org.json.JSONException;
@@ -7,7 +8,7 @@ import org.json.JSONObject;
 
 import java.io.*;
 
-public class JsonConfig {
+public class JsonConfig implements Config {
     private final String configPath;
     private final String configName;
     private final JSONObject jsonObject;
@@ -32,11 +33,19 @@ public class JsonConfig {
         }
     }
 
+    @Override
     public void set(String key, Object value) {
         this.jsonObject.put(key, value);
         save();
     }
 
+    @Override
+    public void remove(String key) {
+        this.jsonObject.remove(key);
+        save();
+    }
+
+    @Override
     public ObjectConverter get(String key) {
         try {
             Object object = this.jsonObject.get(key);
@@ -44,11 +53,6 @@ public class JsonConfig {
         } catch (JSONException e) {
             return null;
         }
-    }
-
-    public void remove(String key) {
-        this.jsonObject.remove(key);
-        save();
     }
 
     public void addDefault(String key, Object value) {
@@ -60,6 +64,7 @@ public class JsonConfig {
         return new JsonObject(this, jsonObject);
     }
 
+    @Override
     public void save() {
         try (FileWriter file = new FileWriter(configPath + "/" + configName)) {
             file.write(this.jsonObject.toString());

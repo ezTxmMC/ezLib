@@ -1,4 +1,27 @@
 package dev.eztxm.config;
 
-public class PropertiesConfig {
+import dev.eztxm.config.util.Config;
+import dev.eztxm.object.ObjectConverter;
+
+public class PropertiesConfig implements Config {
+
+    @Override
+    public void set(String key, Object value) {
+        // todo
+    }
+
+    @Override
+    public void remove(String key) {
+        // todo
+    }
+
+    @Override
+    public ObjectConverter get(String key) {
+        return new ObjectConverter(key); // todo
+    }
+
+    @Override
+    public void save() {
+        // todo
+    }
 }
