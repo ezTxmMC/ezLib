@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.io.*;
 
-
 public class JsonConfig {
     private final String configPath;
     private final String configName;
@@ -50,6 +49,11 @@ public class JsonConfig {
     public void remove(String key) {
         this.jsonObject.remove(key);
         save();
+    }
+
+    public void addDefault(String key, Object value) {
+        if (get(key) != null) return;
+        set(key, value);
     }
 
     public JsonObject toJsonObject() {
