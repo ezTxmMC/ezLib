@@ -10,11 +10,11 @@
   - Toml (WIP)
   - Yaml (WIP)
 - Easy Databases:
+  - H2
   - MariaDB
   - MongoDB (WIP)
-  - SQLite
   - PostgreSQL
-  - H2
+  - SQLite
 - Object Converter
 - Better JsonObject and JsonArray
 - Simplified Logger
