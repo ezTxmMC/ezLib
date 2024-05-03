@@ -8,7 +8,7 @@
   - Json
   - Properties (WIP)
   - Toml (WIP)
-  - Yaml
+  - Yaml (WIP)
 - Easy Databases:
   - MariaDB
   - MongoDB (WIP)
