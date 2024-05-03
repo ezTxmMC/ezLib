@@ -48,4 +48,20 @@ public class JsonArray {
             return null;
         }
     }
+
+    public Object getAsObject(String key) {
+        try {
+            Object object = null;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String currentString = jsonArray.getString(i);
+                if (currentString.equals(key)) {
+                    object = jsonArray.get(i);
+                    break;
+                }
+            }
+            return object;
+        } catch (JSONException | NullPointerException e) {
+            return null;
+        }
+    }
 }

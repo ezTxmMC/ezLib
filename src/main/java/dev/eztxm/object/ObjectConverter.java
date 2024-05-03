@@ -16,6 +16,10 @@ public class ObjectConverter {
         this.object = object;
     }
 
+    public Object asObject() {
+        return object;
+    }
+
     public String asString() {
         return object.toString();
     }

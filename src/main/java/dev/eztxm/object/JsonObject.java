@@ -36,4 +36,12 @@ public class JsonObject {
             return null;
         }
     }
+
+    public Object getAsObject(String key) {
+        try {
+            return jsonObject.get(key);
+        } catch (JSONException e) {
+            return null;
+        }
+    }
 }
