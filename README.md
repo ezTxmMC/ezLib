@@ -64,7 +64,7 @@ Kotlin:
 ```kotlin
 repositories {
     mavenCentral()
-	maven("https://jitpack.io")
+    maven("https://jitpack.io")
 }
 
 dependencies {
