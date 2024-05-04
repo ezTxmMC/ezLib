@@ -35,12 +35,12 @@
     <dependency>
         <groupId>com.github.ezTxmMC</groupId>
         <artifactId>ezLib</artifactId>
-        <version>Tag</version>
+        <version>RELEASE</version>
     </dependency>
 </dependencies>
 ```
 
-Get the Tag from https://jitpack.io/#ezTxmMC/ezLib
+Get RELEASE from https://jitpack.io/#ezTxmMC/ezLib
 
 ### Gradle
 
@@ -55,7 +55,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.ezTxmMC:ezLib:Tag'
+    implementation 'com.github.ezTxmMC:ezLib:RELEASE'
 }
 ```
 
@@ -68,11 +68,11 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ezTxmMC:ezLib:Tag")
+    implementation("com.github.ezTxmMC:ezLib:RELEASE")
 }
 ```
 
-Get the Tag from https://jitpack.io/#ezTxmMC/ezLib
+Get RELEASE from https://jitpack.io/#ezTxmMC/ezLib
 
 ## Usage
 
