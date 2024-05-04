@@ -9,9 +9,10 @@
 ## Features
 
 - Easy Configs:
+  - XML (WIP)
   - Json
   - Toml
-  - Yaml
+  - YAML
   - Properties
 - Annotation Configs (WIP)
 - Easy Databases:
