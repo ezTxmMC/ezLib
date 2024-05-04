@@ -9,9 +9,9 @@
 
 - Easy Configs:
   - Json
-  - Toml (dev-build)
-  - Yaml (dev-build)
-  - Properties (dev-build)
+  - Toml
+  - Yaml
+  - Properties
 - Annotation Configs (WIP)
 - Easy Databases:
   - H2
