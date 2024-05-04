@@ -44,12 +44,12 @@
     <dependency>
         <groupId>com.github.ezTxmMC</groupId>
         <artifactId>ezLib</artifactId>
-        <version>RELEASE</version>
+        <version>VERSION</version>
     </dependency>
 </dependencies>
 ```
 
-Get RELEASE from https://jitpack.io/#ezTxmMC/ezLib
+Get VERSION from https://jitpack.io/#ezTxmMC/ezLib
 
 ### Gradle
 
@@ -64,7 +64,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.ezTxmMC:ezLib:RELEASE'
+    implementation 'com.github.ezTxmMC:ezLib:VERSION'
 }
 ```
 
@@ -77,8 +77,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.ezTxmMC:ezLib:RELEASE")
+    implementation("com.github.ezTxmMC:ezLib:VERSION")
 }
 ```
 
-Get RELEASE from https://jitpack.io/#ezTxmMC/ezLib
+Get VERSION from https://jitpack.io/#ezTxmMC/ezLib
