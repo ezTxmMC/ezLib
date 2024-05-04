@@ -1,6 +1,6 @@
 # ezLib - Your simplified Java library
 
-[![](https://jitpack.io/v/ezTxmMC/ezLib.svg)](https://jitpack.io/#ezTxmMC/ezLib)
+[![](https://jitpack.io/v/ezTxmMC/ezLib.svg?style=flat)](https://jitpack.io/#ezTxmMC/ezLib)
 
 ## Features
 
