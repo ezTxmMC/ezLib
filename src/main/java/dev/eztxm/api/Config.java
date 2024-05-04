@@ -1,4 +1,4 @@
-package dev.eztxm.config.util;
+package dev.eztxm.api;
 
 import dev.eztxm.object.ObjectConverter;
 

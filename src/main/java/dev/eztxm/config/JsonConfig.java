@@ -1,6 +1,6 @@
 package dev.eztxm.config;
 
-import dev.eztxm.config.util.Config;
+import dev.eztxm.api.Config;
 import dev.eztxm.object.JsonObject;
 import dev.eztxm.object.ObjectConverter;
 import org.json.JSONException;
@@ -13,6 +13,12 @@ public class JsonConfig implements Config {
     private final String configName;
     private final JSONObject jsonObject;
 
+
+    /**
+     * Creates a config file.
+     * @param path - The folder path where the config should be.
+     * @param configName - The Name of the config without the type-extension.
+     */
     public JsonConfig(String path, String configName) {
         this.configPath = path;
         this.configName = configName + ".json";
@@ -27,10 +33,10 @@ public class JsonConfig implements Config {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } else {
-            String configJson = readFile(path + "/" + this.configName);
-            this.jsonObject = new JSONObject(configJson);
+            return;
         }
+        String configJson = readFile(path + "/" + this.configName);
+        this.jsonObject = new JSONObject(configJson);
     }
 
     @Override

@@ -1,53 +1,71 @@
 package dev.eztxm.config;
 
-import org.yaml.snakeyaml.LoaderOptions;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
-import dev.eztxm.config.util.Config;
+import dev.eztxm.api.Config;
 import dev.eztxm.object.ObjectConverter;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
 
 public class YamlConfig implements Config {
+    private final YAMLMapper yamlMapper;
+    private final File configFile;
 
-    private final Path configPath;
-    private final Yaml yaml;
-    private Map<String, Object> data;
-
-    public YamlConfig(String filePath) {
-        this.configPath = Paths.get(filePath);
-        this.yaml = new Yaml(new Constructor(new LoaderOptions()));
-        if (Files.exists(configPath)) {
+    public YamlConfig(String path, String configName) {
+        File folder = new File(path);
+        this.configFile = new File(path + "/" + configName + ".yml");
+        if (!folder.exists()) folder.mkdir();
+        if (!configFile.exists()) {
             try {
-                this.data = yaml.load(Files.newInputStream(configPath));
+                configFile.createNewFile();
+                this.yamlMapper = new YAMLMapper();
+                this.yamlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+                this.yamlMapper.writeValue(configFile, new Object());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-             return;
-         }
-         this.data = new HashMap<>();
+        } else {
+            this.yamlMapper = new YAMLMapper();
+        }
     }
 
     @Override
     public void set(String key, Object value) {
-        this.data.put(key, value);
-        this.save();
+        try {
+            Object obj = this.yamlMapper.readValue(configFile, Object.class);
+            ((Map<String, Object>) obj).put(key, value);
+            this.yamlMapper.writeValue(configFile, obj);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void remove(String key) {
-        // todo
+        try {
+            Object obj = this.yamlMapper.readValue(configFile, Object.class);
+            ((Map<String, Object>) obj).remove(key);
+            this.yamlMapper.writeValue(configFile, obj);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public ObjectConverter get(String key) {
-        return new ObjectConverter(this.data.get(key));
+        try {
+            Object obj = this.yamlMapper.readValue(configFile, Object.class);
+            Object value = ((Map<String, Object>) obj).get(key);
+            if (value == null) {
+                return null;
+            }
+            return new ObjectConverter(value);
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     @Override
@@ -57,12 +75,5 @@ public class YamlConfig implements Config {
     }
 
     @Override
-    public void save() {
-        try {
-            String output = yaml.dump(this.data);
-            Files.write(configPath, output.getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public void save() {}
 }

@@ -21,4 +21,8 @@ public class SimpleLogger {
     public void error(String message) {
         System.out.println(LoggerColor.ANSI_RED + prefix + message);
     }
+
+    public void custom(String message) {
+        System.out.println(prefix + message);
+    }
 }

@@ -1,9 +1,9 @@
 package dev.eztxm.database;
 
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.pool.HikariPool;
 import dev.eztxm.database.util.Arguments;
-import dev.eztxm.database.util.SQLConnection;
+import dev.eztxm.api.SQLConnection;
+import dev.eztxm.database.util.SQLDatabaseConnection;
 import lombok.Getter;
 
 import java.sql.Connection;
@@ -12,27 +12,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Getter
 public class PostgreSQLConnection implements SQLConnection {
-    @Getter
-    private HikariPool pool;
-    private final HikariConfig config;
+    private final HikariPool pool;
     private final ExecutorService service;
 
     public PostgreSQLConnection(String host, int port, String database, String username, String password) {
-
-        this.config = new HikariConfig();
-        config.setConnectionTimeout(7500L);
-        config.setMaximumPoolSize(8);
-        config.setMinimumIdle(1);
-        config.setJdbcUrl(String.format("jdbc:postgresql://%s:%s/%s?serverTimezone=UTC&useLegacyDatetimeCode=false&autoReconnect=true", host, port, database));
-        config.setUsername(username);
-        config.setPassword(password);
-        connect();
-
-        this.service = Executors.newCachedThreadPool();
+        SQLDatabaseConnection databaseConnection = new SQLDatabaseConnection();
+        databaseConnection.create("postgresql", host, port, database, username, password);
+        pool = databaseConnection.connect();
+        service = databaseConnection.newCachedThread();
     }
 
     @Override
@@ -67,19 +57,6 @@ public class PostgreSQLConnection implements SQLConnection {
     @Override
     public CompletableFuture<Void> putAsync(String sql, Object... objects) {
         return CompletableFuture.runAsync(() -> put(sql, objects), service);
-    }
-
-    private void connect() {
-        this.pool = new HikariPool(config);
-        try (Connection connection = pool.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement("SELECT 1"); /* ping */
-            statement.setQueryTimeout(15);
-            statement.executeQuery();
-            System.out.println("Successfully to connect to database.");
-        } catch (SQLException e) {
-            System.out.println("Can't connect to the database, check your inputs or your database:\n");
-            e.fillInStackTrace();
-        }
     }
 
     @Override

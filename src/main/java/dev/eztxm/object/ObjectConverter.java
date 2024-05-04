@@ -2,6 +2,9 @@ package dev.eztxm.object;
 
 import dev.eztxm.config.JsonConfig;
 
+import java.util.Collections;
+import java.util.List;
+
 public class ObjectConverter {
     private final JsonConfig jsonConfig;
     private final Object object;
@@ -38,6 +41,10 @@ public class ObjectConverter {
 
     public float asFloat() {
         return (float) object;
+    }
+
+    public List<Object> asList() {
+        return Collections.singletonList(object);
     }
 
     public JsonObject asJsonObject() {
