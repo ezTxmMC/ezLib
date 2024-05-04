@@ -6,15 +6,17 @@
 
 - Easy Configs:
   - Json
-  - Toml (WIP)
-  - Yaml (WIP)
-  - Properties (WIP)
+  - Toml (dev-build)
+  - Yaml (dev-build)
+  - Properties (dev-build)
+- Annotation Configs (WIP)
 - Easy Databases:
   - H2
   - SQLite
   - MariaDB
   - MongoDB (WIP)
   - PostgreSQL
+- Annotation Databases (WIP)
 - Object Converter
 - Better JsonObject and JsonArray
 - Simplified Logger
