@@ -15,10 +15,13 @@
 - Annotation Configs (WIP)
 - Easy Databases:
   - H2
+  - Redis (WIP)
   - SQLite
   - MariaDB
   - MongoDB (WIP)
+  - InfluxDB (WIP)
   - PostgreSQL
+  - DragonflyDB (WIP)
 - Annotation Databases (WIP)
 - Object Converter
 - Better JsonObject and JsonArray
