@@ -57,7 +57,6 @@ Groovy:
 
 ```groovy
 repositories {
-    mavenCentral()
     maven {
         url 'https://jitpack.io'
     }
@@ -72,7 +71,6 @@ Kotlin:
 
 ```kotlin
 repositories {
-    mavenCentral()
     maven("https://jitpack.io")
 }
 
