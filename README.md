@@ -11,7 +11,7 @@
 - Easy Configs:
   - XML (WIP)
   - Json
-  - Toml
+  - TOML
   - YAML
   - Properties
 - Annotation Configs (WIP)
