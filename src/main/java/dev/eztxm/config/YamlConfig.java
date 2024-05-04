@@ -23,7 +23,6 @@ public class YamlConfig implements Config {
                 configFile.createNewFile();
                 this.yamlMapper = new YAMLMapper();
                 this.yamlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-                this.yamlMapper.writeValue(configFile, new Object());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

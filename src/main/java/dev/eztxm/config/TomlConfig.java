@@ -22,7 +22,6 @@ public class TomlConfig implements Config {
                 configFile.createNewFile();
                 this.tomlMapper = new TomlMapper();
                 this.tomlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-                this.tomlMapper.writeValue(configFile, new Object());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
