@@ -9,7 +9,6 @@
 ## Features
 
 - Easy Configs:
-  - XML (WIP)
   - Json
   - TOML
   - YAML
