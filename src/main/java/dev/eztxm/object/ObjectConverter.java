@@ -24,34 +24,66 @@ public class ObjectConverter {
     }
 
     public String asString() {
-        return object.toString();
+        try {
+            return object.toString();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public boolean asBoolean() {
-        return (boolean) object;
+        try {
+            return (boolean) object;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public int asInteger() {
-        return (int) object;
+        try {
+            return (int) object;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public double asDouble() {
-        return (double) object;
+        try {
+            return (double) object;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public float asFloat() {
-        return (float) object;
+        try {
+            return (float) object;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public List<Object> asList() {
-        return Collections.singletonList(object);
+        try {
+            return Collections.singletonList(object);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public JsonObject asJsonObject() {
-        return new JsonObject(jsonConfig, object);
+        try {
+            return new JsonObject(jsonConfig, object);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public JsonArray asJsonArray() {
-        return (JsonArray) object;
+        try {
+            return (JsonArray) object;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
