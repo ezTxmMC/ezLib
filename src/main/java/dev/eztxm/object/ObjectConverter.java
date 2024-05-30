@@ -20,7 +20,11 @@ public class ObjectConverter {
     }
 
     public Object asObject() {
-        return object;
+        try {
+            return object;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String asString() {

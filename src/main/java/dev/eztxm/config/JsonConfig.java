@@ -71,7 +71,6 @@ public class JsonConfig implements Config {
         return new JsonObject(this, jsonObject);
     }
 
-    @Override
     public void save() {
         try (FileWriter file = new FileWriter(configPath + "/" + configName)) {
             file.write(this.jsonObject.toString());

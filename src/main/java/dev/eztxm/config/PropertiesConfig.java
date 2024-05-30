@@ -72,7 +72,4 @@ public class PropertiesConfig implements Config {
         if (get(key) != null) return;
         set(key, value);
     }
-
-    @Override
-    public void save() {}
 }
