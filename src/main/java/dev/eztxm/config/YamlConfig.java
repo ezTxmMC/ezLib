@@ -8,6 +8,7 @@ import dev.eztxm.object.ObjectConverter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class YamlConfig implements Config {
@@ -26,19 +27,19 @@ public class YamlConfig implements Config {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } else {
-            this.yamlMapper = new YAMLMapper();
+            return;
         }
+        this.yamlMapper = new YAMLMapper();
     }
 
     @Override
     public void set(String key, Object value) {
         try {
-            Object obj = this.yamlMapper.readValue(configFile, Object.class);
-            ((Map<String, Object>) obj).put(key, value);
-            this.yamlMapper.writeValue(configFile, obj);
+            Object map = this.yamlMapper.readValue(configFile, Object.class);
+            ((Map<String, Object>) map).put(key, value);
+            this.yamlMapper.writeValue(configFile, map);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.fillInStackTrace();
         }
     }
 
@@ -49,7 +50,7 @@ public class YamlConfig implements Config {
             ((Map<String, Object>) obj).remove(key);
             this.yamlMapper.writeValue(configFile, obj);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.fillInStackTrace();
         }
     }
 
@@ -58,10 +59,16 @@ public class YamlConfig implements Config {
         try {
             Object obj = this.yamlMapper.readValue(configFile, Object.class);
             Object value = ((Map<String, Object>) obj).get(key);
-            if (value == null) {
-                return null;
-            }
             return new ObjectConverter(value);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public Object getAsObject(String key) {
+        try {
+            Object obj = this.yamlMapper.readValue(configFile, Object.class);
+            return ((Map<String, Object>) obj).get(key);
         } catch (IOException e) {
             return null;
         }
@@ -72,7 +79,4 @@ public class YamlConfig implements Config {
         if (get(key) != null) return;
         set(key, value);
     }
-
-    @Override
-    public void save() {}
 }
