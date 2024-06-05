@@ -9,6 +9,7 @@
 ## Features
 
 - Easy Configs:
+  - XML (WIP)
   - Json
   - TOML
   - YAML
@@ -35,21 +36,21 @@
 ```xml
 <repositories>
     <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
+        <id>eztxm-repo</id>
+        <url>https://repo.eztxm.de/maven/</url>
     </repository>
 </repositories>
 
 <dependencies>
     <dependency>
-        <groupId>com.github.ezTxmMC</groupId>
-        <artifactId>ezLib</artifactId>
-        <version>VERSION</version>
+        <groupId>de.eztxm</groupId>
+        <artifactId>ezlib-all</artifactId>
+        <version>1.0-ALPHA7</version>
     </dependency>
 </dependencies>
 ```
 
-Get VERSION from https://jitpack.io/#ezTxmMC/ezLib
+``eztxm-all`` can be replaced by module name.
 
 ### Gradle
 
@@ -58,12 +59,12 @@ Groovy:
 ```groovy
 repositories {
     maven {
-        url 'https://jitpack.io'
+        url 'https://repo.eztxm.de/maven/'
     }
 }
 
 dependencies {
-    implementation 'com.github.ezTxmMC:ezLib:VERSION'
+    implementation 'de.eztxm:ezlib-all:1.0-ALPHA7'
 }
 ```
 
@@ -71,12 +72,12 @@ Kotlin:
 
 ```kotlin
 repositories {
-    maven("https://jitpack.io")
+    maven("https://repo.eztxm.de/maven/")
 }
 
 dependencies {
-    implementation("com.github.ezTxmMC:ezLib:VERSION")
+    implementation("de.eztxm:ezlib-all:1.0-ALPHA7")
 }
 ```
 
-Get VERSION from https://jitpack.io/#ezTxmMC/ezLib
+``eztxm-all`` can be replaced by module name.
