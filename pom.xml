@@ -22,6 +22,7 @@
         <module>ezlib-database-mongodb</module>
         <module>ezlib-database-sqlite</module>
         <module>ezlib-database-postgresql</module>
+        <module>ezlib-config</module>
     </modules>
 
     <properties>
