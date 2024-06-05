@@ -25,6 +25,7 @@
         <module>ezlib-database-postgresql</module>
         <module>ezlib-config</module>
         <module>ezlib-all</module>
+        <module>ezlib-terminal</module>
     </modules>
 
     <properties>
