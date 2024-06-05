@@ -45,7 +45,7 @@
     <dependency>
         <groupId>de.eztxm</groupId>
         <artifactId>ezlib-all</artifactId>
-        <version>1.0-ALPHA7</version>
+        <version>1.0-ALPHA8</version>
     </dependency>
 </dependencies>
 ```
@@ -64,7 +64,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'de.eztxm:ezlib-all:1.0-ALPHA7'
+    implementation 'de.eztxm:ezlib-all:1.0-ALPHA8'
 }
 ```
 
@@ -76,7 +76,7 @@ repositories {
 }
 
 dependencies {
-    implementation("de.eztxm:ezlib-all:1.0-ALPHA7")
+    implementation("de.eztxm:ezlib-all:1.0-ALPHA8")
 }
 ```
 
