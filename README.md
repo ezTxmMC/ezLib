@@ -50,7 +50,7 @@
 </dependencies>
 ```
 
-``eztxm-all`` can be replaced by module name.
+``eztxm-all`` can be replaced by any module name.
 
 ### Gradle
 
@@ -80,4 +80,4 @@ dependencies {
 }
 ```
 
-``eztxm-all`` can be replaced by module name.
+``eztxm-all`` can be replaced by any module name.
