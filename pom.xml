@@ -23,6 +23,7 @@
         <module>ezlib-database-sqlite</module>
         <module>ezlib-database-postgresql</module>
         <module>ezlib-config</module>
+        <module>ezlib-all</module>
     </modules>
 
     <properties>
