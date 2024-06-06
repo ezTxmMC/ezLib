@@ -34,7 +34,7 @@ public class Terminal {
 
     public Terminal() {
         this.scanner = new Scanner(System.in);
-        this.prompt = JavaColor.apply("&9ezLib&8>&7");
+        this.prompt = JavaColor.apply("&9ezLib &8» &7");
         this.commandMap = new CommandMap();
     }
 
