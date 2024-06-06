@@ -1,16 +1,18 @@
-package de.eztxm.command;
+package de.eztxm.terminal.command;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandMap {
-    private Map<String, Command> commandMap;
+    private final Map<String, Command> commandMap;
 
     public CommandMap(Map<String, Command> commandMap) {
-        this.commandMap = new HashMap<>();
+        this.commandMap = commandMap;
     }
 
-    public CommandMap() {}
+    public CommandMap() {
+        this.commandMap = new HashMap<>();
+    }
 
     public void register(Command... commands) {
         for (Command command : commands) {
