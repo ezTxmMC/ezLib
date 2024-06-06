@@ -21,7 +21,7 @@ public class JsonConfig implements Config {
      */
     public JsonConfig(String path, String configName) {
         this.configPath = path;
-        this.configName = configName + ".json";
+        this.configName = configName;
         File folder = new File(path);
         File configFile = new File(path + "/" + this.configName);
         if (!folder.exists()) folder.mkdir();

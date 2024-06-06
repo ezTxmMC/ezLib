@@ -15,7 +15,7 @@ public class TomlConfig implements Config {
 
     public TomlConfig(String path, String configName) {
         File folder = new File(path);
-        this.configFile = new File(path + "/" + configName + ".toml");
+        this.configFile = new File(path + "/" + configName);
         if (!folder.exists()) folder.mkdir();
         if (!configFile.exists()) {
             try {

@@ -16,7 +16,7 @@ public class YamlConfig implements Config {
 
     public YamlConfig(String path, String configName) {
         File folder = new File(path);
-        this.configFile = new File(path + "/" + configName + ".yml");
+        this.configFile = new File(path + "/" + configName);
         if (!folder.exists()) folder.mkdir();
         if (!configFile.exists()) {
             try {

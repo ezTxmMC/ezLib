@@ -16,7 +16,7 @@ public class PropertiesConfig implements Config {
 
     public PropertiesConfig(String path, String configName) {
         File folder = new File(path);
-        this.configFile = new File(path + "/" + configName + ".properties");
+        this.configFile = new File(path + "/" + configName);
         if (!folder.exists()) folder.mkdir();
         if (!configFile.exists()) {
             try {
