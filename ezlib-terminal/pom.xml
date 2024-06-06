@@ -19,9 +19,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.32</version>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>ezlib-core</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 

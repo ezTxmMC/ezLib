@@ -25,6 +25,7 @@
   - PostgreSQL
   - DragonflyDB (WIP)
 - Annotation Databases (WIP)
+- Custom Terminal
 - Object Converter
 - Better JsonObject and JsonArray
 - Simplified Logger

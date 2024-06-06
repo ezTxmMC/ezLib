@@ -1,5 +1,7 @@
 package de.eztxm.terminal;
 
+import de.eztxm.logger.LoggerColor;
+import de.eztxm.logger.SimpleLogger;
 import de.eztxm.terminal.command.CommandMap;
 import de.eztxm.terminal.util.JavaColor;
 import lombok.Getter;
@@ -8,6 +10,7 @@ import lombok.Setter;
 import java.util.Scanner;
 
 public class Terminal {
+    private final SimpleLogger logger;
     private final Scanner scanner;
     @Getter @Setter
     private String prompt;
@@ -17,6 +20,7 @@ public class Terminal {
     private CommandMap commandMap;
 
     public Terminal(String name, String prompt) {
+        this.logger = new SimpleLogger();
         this.scanner = new Scanner(System.in);
         this.name = name;
         this.prompt = prompt;
@@ -24,6 +28,7 @@ public class Terminal {
     }
 
     public Terminal(String name, CommandMap commandMap) {
+        this.logger = new SimpleLogger();
         this.scanner = new Scanner(System.in);
         this.name = name;
         this.prompt = JavaColor.apply("&9ezLib&8>&7");
@@ -31,6 +36,7 @@ public class Terminal {
     }
 
     public Terminal(String name, String prompt, CommandMap commandMap) {
+        this.logger = new SimpleLogger();
         this.scanner = new Scanner(System.in);
         this.name = name;
         this.prompt = prompt;
@@ -38,6 +44,7 @@ public class Terminal {
     }
 
     public Terminal(String name) {
+        this.logger = new SimpleLogger();
         this.scanner = new Scanner(System.in);
         this.name = name;
         this.prompt = JavaColor.apply("&9ezLib &8» &7");
@@ -49,17 +56,22 @@ public class Terminal {
     }
 
     public void writeLine(String prefix, String message) {
-        System.out.println(JavaColor.apply(prefix + message));
+        logger.custom(JavaColor.apply(prefix + message));
         System.out.flush();
     }
 
     public void writeLine(String message) {
-        System.out.println(JavaColor.apply(message));
+        logger.custom(JavaColor.apply(message));
         System.out.flush();
     }
 
     public void writeLineColored(String hex, String message) {
-        System.out.println(JavaColor.colored(hex, message));
+        logger.custom(JavaColor.colored(hex, message));
+        System.out.flush();
+    }
+
+    public void writeLineColored(LoggerColor color, String message) {
+        logger.custom(color, message);
         System.out.flush();
     }
 
