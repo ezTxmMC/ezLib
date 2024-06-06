@@ -12,28 +12,34 @@ public class Terminal {
     @Getter @Setter
     private String prompt;
     @Getter @Setter
+    private String name;
+    @Getter @Setter
     private CommandMap commandMap;
 
-    public Terminal(String prompt) {
+    public Terminal(String name, String prompt) {
         this.scanner = new Scanner(System.in);
+        this.name = name;
         this.prompt = prompt;
         this.commandMap = new CommandMap();
     }
 
-    public Terminal(CommandMap commandMap) {
+    public Terminal(String name, CommandMap commandMap) {
         this.scanner = new Scanner(System.in);
+        this.name = name;
         this.prompt = JavaColor.apply("&9ezLib&8>&7");
         this.commandMap = commandMap;
     }
 
-    public Terminal(String prompt, CommandMap commandMap) {
+    public Terminal(String name, String prompt, CommandMap commandMap) {
         this.scanner = new Scanner(System.in);
+        this.name = name;
         this.prompt = prompt;
         this.commandMap = commandMap;
     }
 
-    public Terminal() {
+    public Terminal(String name) {
         this.scanner = new Scanner(System.in);
+        this.name = name;
         this.prompt = JavaColor.apply("&9ezLib &8» &7");
         this.commandMap = new CommandMap();
     }
@@ -42,12 +48,32 @@ public class Terminal {
         handleTerminal();
     }
 
+    public void writeLine(String prefix, String message) {
+        System.out.println(JavaColor.apply(prefix + message));
+        System.out.flush();
+    }
+
+    public void writeLine(String message) {
+        System.out.println(JavaColor.apply(message));
+        System.out.flush();
+    }
+
+    public void writeLineColored(String hex, String message) {
+        System.out.println(JavaColor.colored(hex, message));
+        System.out.flush();
+    }
+
+    public void emptyLine() {
+        System.out.println("\n");
+        System.out.flush();
+    }
+
     public void handleTerminal() {
-        Thread commandThread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             while (Thread.currentThread().isAlive()) {
                 System.out.print(prompt);
                 if(scanner.hasNext()) {
-                    String rawCommand = scanner.nextLine();
+                    String rawCommand = scanner.nextLine().trim();
                     String[] splitRawCommand = rawCommand.split(" ");
                     commandMap.getCommands().forEach((commandName, command) -> {
                         if(splitRawCommand[0].equalsIgnoreCase(commandName)) {
@@ -65,8 +91,7 @@ public class Terminal {
                     });
                 }
             }
-        });
-
-        commandThread.start();
+        }, name);
+        thread.start();
     }
 }
