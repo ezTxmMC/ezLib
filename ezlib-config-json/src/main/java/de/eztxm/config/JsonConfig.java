@@ -2,7 +2,7 @@ package de.eztxm.config;
 
 import de.eztxm.api.config.Config;
 import de.eztxm.config.object.JsonObject;
-import de.eztxm.object.ObjectConverter;
+import de.eztxm.config.object.ObjectConverter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
