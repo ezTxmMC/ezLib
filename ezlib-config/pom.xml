@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.eztxm</groupId>
         <artifactId>ezLib</artifactId>
-        <version>1.0-ALPHA9-SNAPSHOT</version>
+        <version>1.0-ALPHA9</version>
     </parent>
 
     <artifactId>ezlib-config</artifactId>
