@@ -1,4 +1,4 @@
-package de.eztxm.command;
+package de.eztxm.terminal.command;
 
 public enum CommandResponse {
     COMMAND_SUCCESS,

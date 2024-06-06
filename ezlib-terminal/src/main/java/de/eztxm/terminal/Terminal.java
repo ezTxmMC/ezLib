@@ -1,14 +1,14 @@
-package de.eztxm;
+package de.eztxm.terminal;
 
-import de.eztxm.command.CommandMap;
-import de.eztxm.utils.JavaColor;
+import de.eztxm.terminal.command.CommandMap;
+import de.eztxm.terminal.util.JavaColor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Scanner;
 
 public class Terminal {
-    private Scanner scanner;
+    private final Scanner scanner;
     @Getter @Setter
     private String prompt;
     @Getter @Setter

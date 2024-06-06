@@ -1,4 +1,4 @@
-package de.eztxm.command;
+package de.eztxm.terminal.command;
 
 public abstract class Command {
     public abstract CommandResponse execute(String command, String[] args);

@@ -1,4 +1,4 @@
-package de.eztxm.utils;
+package de.eztxm.terminal.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
