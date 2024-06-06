@@ -3,7 +3,7 @@ package de.eztxm.annotation.config;
 import de.eztxm.annotation.Config;
 import de.eztxm.config.JsonConfig;
 import de.eztxm.logger.SimpleLogger;
-import de.eztxm.object.ObjectConverter;
+import de.eztxm.config.object.ObjectConverter;
 
 import java.lang.reflect.Method;
 
