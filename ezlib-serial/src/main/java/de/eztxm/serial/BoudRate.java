@@ -1,4 +1,4 @@
-package de.eztxm;
+package de.eztxm.serial;
 
 import lombok.AllArgsConstructor;
 

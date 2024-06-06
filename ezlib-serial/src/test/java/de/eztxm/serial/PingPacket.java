@@ -1,4 +1,4 @@
-import de.eztxm.Packet;
+package de.eztxm.serial;
 
 public class PingPacket extends Packet {
     @Override

@@ -1,4 +1,4 @@
-package de.eztxm;
+package de.eztxm.serial;
 
 public abstract class Packet {
     public abstract String id();

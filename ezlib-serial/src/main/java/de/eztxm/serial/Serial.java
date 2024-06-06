@@ -1,4 +1,4 @@
-package de.eztxm;
+package de.eztxm.serial;
 
 import gnu.io.NRSerialPort;
 import gnu.io.SerialPortEvent;
@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.Set;
 import java.util.TooManyListenersException;
 import java.util.function.Consumer;

@@ -1,5 +1,4 @@
-import de.eztxm.BoudRate;
-import de.eztxm.Serial;
+package de.eztxm.serial;
 
 public class SerialTest {
     public static void main(String[] args) {
