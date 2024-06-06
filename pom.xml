@@ -11,7 +11,9 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>ezlib-all</module>
         <module>ezlib-annotation</module>
+        <module>ezlib-config</module>
         <module>ezlib-config-json</module>
         <module>ezlib-config-properties</module>
         <module>ezlib-config-toml</module>
@@ -23,10 +25,8 @@
         <module>ezlib-database-mongodb</module>
         <module>ezlib-database-sqlite</module>
         <module>ezlib-database-postgresql</module>
-        <module>ezlib-config</module>
-        <module>ezlib-all</module>
-        <module>ezlib-terminal</module>
         <module>ezlib-serial</module>
+        <module>ezlib-terminal</module>
     </modules>
 
     <properties>
