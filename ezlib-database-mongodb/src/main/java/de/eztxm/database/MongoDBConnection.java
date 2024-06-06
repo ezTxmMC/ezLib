@@ -15,16 +15,16 @@ public class MongoDBConnection {
         mongoDatabase = mongoClient.getDatabase(database);
     }
 
-    public boolean createCollection(String name) {
-        if (!isCollectionExists(name)) return false;
-        mongoDatabase.createCollection(name);
+    public boolean createCollection(String collection) {
+        if (!isCollectionExists(collection)) return false;
+        mongoDatabase.createCollection(collection);
         return true;
     }
 
-    public boolean isCollectionExists(String name) {
+    public boolean isCollectionExists(String collection) {
         AtomicBoolean exists = new AtomicBoolean(false);
         mongoDatabase.listCollectionNames().forEach(string -> {
-            if (!string.equals(name)) {
+            if (!string.equals(collection)) {
                 return;
             }
             exists.set(true);
