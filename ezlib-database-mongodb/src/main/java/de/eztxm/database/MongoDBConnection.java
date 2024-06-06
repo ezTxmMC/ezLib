@@ -1,10 +1,8 @@
 package de.eztxm.database;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -38,7 +36,27 @@ public class MongoDBConnection {
         return mongoDatabase.getCollection(name);
     }
 
-    public void set(String collection) {
+    public Document find(String collection, Bson filter) {
+        return getCollection(collection).find(filter).first();
+    }
 
+    public FindIterable<Document> findMultiple(String collection, Bson filter) {
+        return getCollection(collection).find(filter);
+    }
+
+    public void insert(String collection, Document insert) {
+        getCollection(collection).insertOne(insert);
+    }
+
+    public void update(String collection, Bson filter, Document update) {
+        getCollection(collection).updateOne(filter, update);
+    }
+
+    public void replace(String collection, Bson filter, Document update) {
+        getCollection(collection).replaceOne(filter, update);
+    }
+
+    public void delete(String collection, Bson filter) {
+        getCollection(collection).deleteOne(filter);
     }
 }
