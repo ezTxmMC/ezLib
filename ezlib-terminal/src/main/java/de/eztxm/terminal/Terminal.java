@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.util.Scanner;
 
 public class Terminal {
+    @Getter
     private final SimpleLogger logger;
     private final Scanner scanner;
     @Getter @Setter
