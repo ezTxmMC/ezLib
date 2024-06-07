@@ -20,6 +20,11 @@
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
+            <artifactId>ezlib-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>ezlib-config</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
@@ -30,12 +35,17 @@
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-terminal</artifactId>
+            <artifactId>ezlib-serial</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-serial</artifactId>
+            <artifactId>ezlib-simplelogger</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>ezlib-terminal</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
