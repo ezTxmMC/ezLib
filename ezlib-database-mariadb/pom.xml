@@ -20,7 +20,12 @@
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-core</artifactId>
+            <artifactId>ezlib-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>ezlib-database-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

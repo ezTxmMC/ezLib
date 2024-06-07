@@ -2,7 +2,6 @@ package de.eztxm.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.pool.HikariPool;
-import de.eztxm.logger.SimpleLogger;
 import lombok.Getter;
 
 import java.sql.Connection;
@@ -46,10 +45,9 @@ public class SQLDatabaseConnection {
             final PreparedStatement statement = connection.prepareStatement("SELECT 1");
             statement.setQueryTimeout(15);
             statement.executeQuery();
-            new SimpleLogger("ezLib").info("Successfully to connect to database.");
+            return pool;
         } catch (SQLException e) {
-            new SimpleLogger("ezLib").error("Can't connect to the database, check your inputs or your database:\n" + e.getMessage());
+            return null;
         }
-        return pool;
     }
 }

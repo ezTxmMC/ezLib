@@ -1,7 +1,7 @@
 package de.eztxm.terminal;
 
-import de.eztxm.logger.LoggerColor;
-import de.eztxm.logger.SimpleLogger;
+import de.eztxm.simplelogger.color.LoggerColor;
+import de.eztxm.simplelogger.SimpleLogger;
 import de.eztxm.terminal.command.CommandMap;
 import de.eztxm.terminal.util.JavaColor;
 import lombok.Getter;

@@ -1,4 +1,6 @@
-package de.eztxm.logger;
+package de.eztxm.simplelogger;
+
+import de.eztxm.simplelogger.color.LoggerColor;
 
 public class SimpleLogger {
     private String prefix;

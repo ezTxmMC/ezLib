@@ -2,7 +2,7 @@ package de.eztxm.annotation.config;
 
 import de.eztxm.annotation.Config;
 import de.eztxm.config.JsonConfig;
-import de.eztxm.logger.SimpleLogger;
+import de.eztxm.simplelogger.SimpleLogger;
 import de.eztxm.config.object.ObjectConverter;
 
 import java.lang.reflect.Method;
@@ -27,7 +27,7 @@ public class ConfigFactory {
         String fileName = annotation.fileName();
         switch (type) {
             case JSON -> jsonConfig = new JsonConfig(path, fileName);
-            default -> new SimpleLogger("[ezLib]").warn("This type of annotation config is currently not supported");
+            default -> new SimpleLogger("[ezLib] ").warn("This type of annotation config is currently not supported");
         }
         return clazz;
     }

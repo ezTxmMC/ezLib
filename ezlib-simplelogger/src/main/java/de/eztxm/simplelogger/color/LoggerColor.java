@@ -1,4 +1,4 @@
-package de.eztxm.logger;
+package de.eztxm.simplelogger.color;
 
 public class LoggerColor {
     public static final String ANSI_RESET = "\u001B[0m";
