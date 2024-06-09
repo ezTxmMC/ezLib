@@ -26,8 +26,8 @@
         <module>ezlib-database-mariadb</module>
         <module>ezlib-database-mongodb</module>
         <module>ezlib-database-postgresql</module>
-        <module>ezlib-database-sqlite</module>
         <module>ezlib-database-redis</module>
+        <module>ezlib-database-sqlite</module>
         <module>ezlib-serial</module>
         <module>ezlib-simplelogger</module>
         <module>ezlib-terminal</module>
