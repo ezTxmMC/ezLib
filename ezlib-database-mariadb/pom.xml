@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.eztxm</groupId>
         <artifactId>ezLib</artifactId>
-        <version>1.0-ALPHA10</version>
+        <version>1.0-ALPHA11-SNAPSHOT</version>
     </parent>
 
     <artifactId>ezlib-database-mariadb</artifactId>
