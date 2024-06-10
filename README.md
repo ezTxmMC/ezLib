@@ -46,7 +46,7 @@
     <dependency>
         <groupId>de.eztxm</groupId>
         <artifactId>ezlib-all</artifactId>
-        <version>1.0-ALPHA9</version>
+        <version>1.0-ALPHA10</version>
     </dependency>
 </dependencies>
 ```
@@ -65,7 +65,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'de.eztxm:ezlib-all:1.0-ALPHA9'
+    implementation 'de.eztxm:ezlib-all:1.0-ALPHA10'
 }
 ```
 
@@ -77,8 +77,17 @@ repositories {
 }
 
 dependencies {
-    implementation("de.eztxm:ezlib-all:1.0-ALPHA9")
+    implementation("de.eztxm:ezlib-all:1.0-ALPHA10")
 }
 ```
 
 ``eztxm-all`` can be replaced by any module name.
+
+## Todo
+
+- Serial by @DragonRex004
+- GSON-Handler by @ezTxmMC
+- Redis/DragonflyDB by @ezTxmMC
+- InfluxDB by @ezTxmMC
+- XML Configs by @ezTxmMC
+- Expand Terminal and add integraded multi-terminal system
