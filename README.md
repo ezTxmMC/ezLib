@@ -90,4 +90,4 @@ dependencies {
 - Redis/DragonflyDB by @ezTxmMC
 - InfluxDB by @ezTxmMC
 - XML Configs by @ezTxmMC
-- Expand Terminal and add integraded multi-terminal system
+- Expand Terminal and add integraded multi-terminal system by @ezTxmMC & @DragonRex004
