@@ -1,9 +1,9 @@
 package de.eztxm.annotation.config;
 
 import de.eztxm.annotation.Config;
-import de.eztxm.config.JsonConfig;
-import de.eztxm.simplelogger.SimpleLogger;
-import de.eztxm.config.object.ObjectConverter;
+import de.eztxm.ezlib.config.JsonConfig;
+import de.eztxm.ezlib.simplelogger.SimpleLogger;
+import de.eztxm.ezlib.config.object.ObjectConverter;
 
 import java.lang.reflect.Method;
 
