@@ -12,6 +12,8 @@
 
     <modules>
         <module>ezlib-all</module>
+        <module>ezlib-all-spigot</module>
+        <module>ezlib-all-paper</module>
         <module>ezlib-annotation</module>
         <module>ezlib-api</module>
         <module>ezlib-config</module>
@@ -28,7 +30,11 @@
         <module>ezlib-database-postgresql</module>
         <module>ezlib-database-redis</module>
         <module>ezlib-database-sqlite</module>
+        <module>ezlib-faster-spigot</module>
+        <module>ezlib-faster-paper</module>
         <module>ezlib-serial</module>
+        <module>ezlib-simple-adventure-spigot</module>
+        <module>ezlib-simple-adventure-paper</module>
         <module>ezlib-simplelogger</module>
         <module>ezlib-terminal</module>
         <module>ezlib-downloader</module>
