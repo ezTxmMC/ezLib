@@ -1,33 +1,37 @@
 package de.eztxm.ezlib.config.object;
 
-import de.eztxm.ezlib.config.JsonConfig;
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public class JsonArray {
-    private final JsonConfig jsonConfig;
+import java.util.Iterator;
+
+@Getter
+public class JsonArray implements Iterable<Object> {
     private final JSONArray jsonArray;
 
-    public JsonArray(JsonConfig jsonConfig, Object object) {
-        this.jsonConfig = jsonConfig;
+    public JsonArray(Object object) {
         this.jsonArray = (JSONArray) object;
     }
 
-    public JsonArray(JsonConfig jsonConfig, JSONArray jsonArray) {
-        this.jsonConfig = jsonConfig;
+    public JsonArray(JSONArray jsonArray) {
         this.jsonArray = jsonArray;
     }
 
-    public void add(String value) {
-        this.jsonArray.put(value);
-        jsonConfig.save();
+    public JsonArray() {
+        this.jsonArray = new JSONArray();
     }
 
-    public void remove(String value) {
-        for (int i = 0; i < jsonArray.length(); i++) {
-            String currentString = jsonArray.getString(i);
+    public void add(Object value) {
+        this.jsonArray.put(value);
+    }
+
+    public void remove(Object value) {
+        for (int i = 0; i < this.jsonArray.length(); i++) {
+            String currentString = this.jsonArray.getString(i);
             if (currentString.equals(value)) {
-                jsonArray.remove(i);
+                this.jsonArray.remove(i);
                 break;
             }
         }
@@ -36,10 +40,10 @@ public class JsonArray {
     public ObjectConverter get(String key) {
         try {
             Object object = null;
-            for (int i = 0; i < jsonArray.length(); i++) {
-                String currentString = jsonArray.getString(i);
+            for (int i = 0; i < this.jsonArray.length(); i++) {
+                String currentString = this.jsonArray.getString(i);
                 if (currentString.equals(key)) {
-                    object = jsonArray.get(i);
+                    object = this.jsonArray.get(i);
                     break;
                 }
             }
@@ -52,10 +56,10 @@ public class JsonArray {
     public Object getAsObject(String key) {
         try {
             Object object = null;
-            for (int i = 0; i < jsonArray.length(); i++) {
-                String currentString = jsonArray.getString(i);
+            for (int i = 0; i < this.jsonArray.length(); i++) {
+                String currentString = this.jsonArray.getString(i);
                 if (currentString.equals(key)) {
-                    object = jsonArray.get(i);
+                    object = this.jsonArray.get(i);
                     break;
                 }
             }
@@ -64,4 +68,11 @@ public class JsonArray {
             return null;
         }
     }
+
+    @NotNull
+    @Override
+    public Iterator<Object> iterator() {
+        return this.jsonArray.iterator();
+    }
+
 }

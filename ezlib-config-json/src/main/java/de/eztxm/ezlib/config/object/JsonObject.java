@@ -1,31 +1,31 @@
 package de.eztxm.ezlib.config.object;
 
-import de.eztxm.ezlib.config.JsonConfig;
+import lombok.Getter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+@Getter
 public class JsonObject {
-    private final JsonConfig jsonConfig;
     private final JSONObject jsonObject;
 
-    public JsonObject(JsonConfig jsonConfig, Object object) {
-        this.jsonConfig = jsonConfig;
+    public JsonObject(Object object) {
         this.jsonObject = (JSONObject) object;
     }
 
-    public JsonObject(JsonConfig jsonConfig, JSONObject jsonObject) {
-        this.jsonConfig = jsonConfig;
+    public JsonObject(JSONObject jsonObject) {
         this.jsonObject = jsonObject;
+    }
+
+    public JsonObject() {
+        this.jsonObject = new JSONObject();
     }
 
     public void set(String key, String value) {
         this.jsonObject.put(key, value);
-        jsonConfig.save();
     }
 
     public void remove(String key) {
         this.jsonObject.remove(key);
-        jsonConfig.save();
     }
 
     public ObjectConverter get(String key) {
@@ -44,4 +44,5 @@ public class JsonObject {
             return null;
         }
     }
+
 }
