@@ -68,7 +68,7 @@ public class JsonConfig implements Config {
     }
 
     public JsonObject toJsonObject() {
-        return new JsonObject(this, jsonObject);
+        return new JsonObject(jsonObject);
     }
 
     public void save() {
