@@ -1,5 +1,8 @@
 # 1.0-ALPHA11 Changelog (WIP)
 
+- Added LICENSE
+- Renamed packages from de.eztxm to de.eztxm.ezlib
+
 ## New modules
 
 ### ezlib-downloader
@@ -17,6 +20,10 @@ A replacement for my BetterSpigotLib
 - Easier handling of the api's
 
 ## Changed modules
+
+### ezlib-config-json
+
+- Optimized and fixed JsonObject and JsonArray
 
 ### ezlib-simplelogger
 
