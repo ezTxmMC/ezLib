@@ -77,7 +77,7 @@ public class ObjectConverter {
 
     public JsonObject asJsonObject() {
         try {
-            return new JsonObject(jsonConfig, object);
+            return new JsonObject(object);
         } catch (Exception e) {
             return null;
         }
