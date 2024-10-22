@@ -13,30 +13,30 @@ public class SimpleLogger {
 
     public void info(String message) {
         if (prefix == null) {
-            System.out.println(LoggerColor.ANSI_WHITE + message);
+            System.out.println(LoggerColor.ANSI_WHITE.getColorCode() + message);
         }
-        System.out.println(LoggerColor.ANSI_WHITE + prefix + message);
+        System.out.println(LoggerColor.ANSI_WHITE.getColorCode() + prefix + message);
     }
 
     public void marked(String message) {
         if (prefix == null) {
-            System.out.println(LoggerColor.ANSI_GREEN + message);
+            System.out.println(LoggerColor.ANSI_GREEN.getColorCode() + message);
         }
-        System.out.println(LoggerColor.ANSI_GREEN + prefix + message);
+        System.out.println(LoggerColor.ANSI_GREEN.getColorCode() + prefix + message);
     }
 
     public void warn(String message) {
         if (prefix == null) {
-            System.out.println(LoggerColor.ANSI_YELLOW + message);
+            System.out.println(LoggerColor.ANSI_YELLOW.getColorCode() + message);
         }
-        System.out.println(LoggerColor.ANSI_YELLOW + prefix + message);
+        System.out.println(LoggerColor.ANSI_YELLOW.getColorCode() + prefix + message);
     }
 
     public void error(String message) {
         if (prefix == null) {
-            System.out.println(LoggerColor.ANSI_RED + message);
+            System.out.println(LoggerColor.ANSI_RED.getColorCode() + message);
         }
-        System.out.println(LoggerColor.ANSI_RED + prefix + message);
+        System.out.println(LoggerColor.ANSI_RED.getColorCode() + prefix + message);
     }
 
     public void custom(String message) {
