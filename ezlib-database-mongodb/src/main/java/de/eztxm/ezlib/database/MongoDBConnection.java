@@ -10,7 +10,7 @@ public class MongoDBConnection {
     private final MongoDatabase mongoDatabase;
 
     public MongoDBConnection(String host, int port, String username, String password, String database) {
-        String uri = "mongodb://" + username + ":" + password + "@" + host + ":" + port;
+        String uri = "mongodb://" + username + ":" + password + "@" + host + ":" + port + "/?authSource=" + database;
         MongoClient mongoClient = MongoClients.create(uri);
         mongoDatabase = mongoClient.getDatabase(database);
     }
