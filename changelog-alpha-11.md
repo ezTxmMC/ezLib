@@ -9,25 +9,36 @@
 
 - Download a file to a directory.
 
-### ezlib-faster-spigot & ezlib-faster-paper
-
-A replacement for my BetterSpigotLib
-
-- Shortcut methods
-  - example:
-    - inRadius(entity/player/location, blocks)
-    - inArea(firstLocation, secondLocation)
-- Easier handling of the api's
-
 ## Changed modules
 
-### ezlib-config-json
+### ezlib-core
 
-- Optimized and fixed JsonObject and JsonArray
+- Renamed to ezlib-common
+
+## Removed modules
+
+### ezlib-all-paper
+
+### ezlib-all-spigot
+
+### ezlib-annotation
+
+### ezlib-database-h2
+
+### ezlib-database-postgresql
+
+### ezlib-database-redis
+
+### ezlib-faster-paper
+
+### ezlib-faster-spigot
+
+### ezlib-serial
+
+### ezlib-simple-adventure-paper
+
+### ezlib-simple-adventure-spigot
 
 ### ezlib-simplelogger
 
-- Added Message-Class for better creating messages.
-- Changed LoggerColor from class to enum.
-- Added ILoggerColor Interface for custom LoggerColor classes.
-
+### ezlib-terminal

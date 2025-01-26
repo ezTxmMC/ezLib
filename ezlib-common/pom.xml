@@ -9,7 +9,7 @@
         <version>1.0-ALPHA11-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ezlib-terminal</artifactId>
+    <artifactId>ezlib-common</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -17,19 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>eztxm-repo</id>
-            <url>https://repo.eztxm.de/maven/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
-        <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-simplelogger</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

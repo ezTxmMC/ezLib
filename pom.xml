@@ -12,32 +12,18 @@
 
     <modules>
         <module>ezlib-all</module>
-        <module>ezlib-all-spigot</module>
-        <module>ezlib-all-paper</module>
-        <module>ezlib-annotation</module>
         <module>ezlib-api</module>
         <module>ezlib-config</module>
         <module>ezlib-config-json</module>
         <module>ezlib-config-properties</module>
         <module>ezlib-config-toml</module>
         <module>ezlib-config-yaml</module>
-        <module>ezlib-core</module>
+        <module>ezlib-common</module>
         <module>ezlib-database</module>
         <module>ezlib-database-core</module>
-        <module>ezlib-database-h2</module>
         <module>ezlib-database-mariadb</module>
         <module>ezlib-database-mongodb</module>
-        <module>ezlib-database-postgresql</module>
-        <module>ezlib-database-redis</module>
-        <module>ezlib-database-sqlite</module>
         <module>ezlib-downloader</module>
-        <module>ezlib-faster-spigot</module>
-        <module>ezlib-faster-paper</module>
-        <module>ezlib-serial</module>
-        <module>ezlib-simple-adventure-spigot</module>
-        <module>ezlib-simple-adventure-paper</module>
-        <module>ezlib-simplelogger</module>
-        <module>ezlib-terminal</module>
     </modules>
 
     <properties>
