@@ -22,14 +22,14 @@ public class MongoDBConnection {
     }
 
     public boolean isCollectionExists(String collection) {
-        AtomicBoolean exists = new AtomicBoolean(false);
-        mongoDatabase.listCollectionNames().forEach(string -> {
-            if (!string.equals(collection)) {
-                return;
+        boolean exists = false;
+        for (String collectionName : mongoDatabase.listCollectionNames()) {
+            if (!collectionName.equals(collection)) {
+                continue;
             }
-            exists.set(true);
-        });
-        return exists.get();
+            exists = true;
+        }
+        return exists;
     }
 
     public MongoCollection<Document> getCollection(String name) {
