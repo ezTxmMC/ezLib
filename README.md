@@ -9,26 +9,16 @@
 ## Features
 
 - Easy Configs:
-  - XML (WIP)
   - Json
   - TOML
   - YAML
   - Properties
-- Annotation Configs (WIP)
 - Easy Databases:
-  - H2
-  - Redis (WIP)
   - SQLite
   - MariaDB
-  - MongoDB (WIP)
-  - InfluxDB (WIP)
-  - PostgreSQL
-  - DragonflyDB (WIP)
-- Annotation Databases (WIP)
-- Custom Terminal
+  - MongoDB
 - Object Converter
 - Better JsonObject and JsonArray
-- Simplified Logger
 
 ## Dependency
 
@@ -83,11 +73,6 @@ dependencies {
 
 ``eztxm-all`` can be replaced by any module name.
 
-## Todo
+## ToDo-List
 
-- Serial by @DragonRex004
 - GSON-Handler by @ezTxmMC
-- Redis/DragonflyDB by @ezTxmMC
-- InfluxDB by @ezTxmMC
-- XML Configs by @ezTxmMC
-- Expand Terminal and add integraded multi-terminal system by @ezTxmMC & @DragonRex004
