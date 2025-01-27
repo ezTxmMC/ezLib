@@ -47,24 +47,27 @@ public class ObjectConverter {
         try {
             return (int) object;
         } catch (Exception e) {
-            return -1;
+            System.out.println(e.getMessage());
         }
+        return 0;
     }
 
     public double asDouble() {
         try {
             return (double) object;
         } catch (Exception e) {
-            return -1;
+            System.out.println(e.getMessage());
         }
+        return 0;
     }
 
     public float asFloat() {
         try {
             return (float) object;
         } catch (Exception e) {
-            return -1;
+            System.out.println(e.getMessage());
         }
+        return 0;
     }
 
     public List<Object> asList() {
@@ -85,7 +88,7 @@ public class ObjectConverter {
 
     public JsonArray asJsonArray() {
         try {
-            return (JsonArray) object;
+            return new JsonArray(object);
         } catch (Exception e) {
             return null;
         }

@@ -8,16 +8,20 @@ import org.json.JSONObject;
 public class JsonObject {
     private final JSONObject jsonObject;
 
+    public JsonObject() {
+        this.jsonObject = new JSONObject();
+    }
+
+    public JsonObject(String jsonString) {
+        this.jsonObject = new JSONObject(jsonString);
+    }
+
     public JsonObject(Object object) {
         this.jsonObject = (JSONObject) object;
     }
 
     public JsonObject(JSONObject jsonObject) {
         this.jsonObject = jsonObject;
-    }
-
-    public JsonObject() {
-        this.jsonObject = new JSONObject();
     }
 
     public void set(String key, String value) {
@@ -36,13 +40,4 @@ public class JsonObject {
             return null;
         }
     }
-
-    public Object getAsObject(String key) {
-        try {
-            return jsonObject.get(key);
-        } catch (JSONException e) {
-            return null;
-        }
-    }
-
 }
