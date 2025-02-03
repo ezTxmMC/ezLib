@@ -6,7 +6,7 @@
 
     <groupId>de.eztxm</groupId>
     <artifactId>ezLib</artifactId>
-    <version>1.0-ALPHA11-SNAPSHOT</version>
+    <version>1.0-ALPHA11</version>
 
     <packaging>pom</packaging>
 
