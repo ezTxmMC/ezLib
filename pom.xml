@@ -14,7 +14,6 @@
         <module>ezlib-all</module>
         <module>ezlib-api</module>
         <module>ezlib-config</module>
-        <module>ezlib-config-gson</module>
         <module>ezlib-config-json</module>
         <module>ezlib-config-properties</module>
         <module>ezlib-config-toml</module>

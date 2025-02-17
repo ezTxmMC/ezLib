@@ -1,64 +1,134 @@
 package de.eztxm.ezlib.config;
 
 import de.eztxm.ezlib.api.config.Config;
+import de.eztxm.ezlib.config.library.JsonLibrary;
 import de.eztxm.ezlib.config.object.JsonObject;
 import de.eztxm.ezlib.config.object.ObjectConverter;
-import org.json.JSONException;
-import org.json.JSONObject;
+import lombok.Getter;
+import org.json.JSONObject;  // External dependency for org.json
+import com.google.gson.*;
 
 import java.io.*;
 
+/**
+ * A standalone configuration class that saves and loads JSON files.
+ * Supports three modes: CUSTOM (the built-in implementation), ORG_JSON, and GSON.
+ */
 public class JsonConfig implements Config {
-    private final String configPath;
-    private final String configName;
-    private final JSONObject jsonObject;
 
+    // Optional getters:
+    @Getter
+    private final String configPath;
+    @Getter
+    private final String configName;
+    @Getter
+    private final JsonLibrary library;
+
+    // Internal representations (only one will be used depending on the mode)
+    private JsonObject customJsonObject;
+    private org.json.JSONObject orgJsonObject;
+    private com.google.gson.JsonObject gsonObject;
+
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     /**
-     * Creates a config file.
-     * @param path - The folder path where the config should be.
-     * @param configName - The Name of the config without the type-extension.
+     * Constructs a new JsonConfig.
+     *
+     * @param path       Path to the configuration folder.
+     * @param configName Name of the configuration file (e.g., "config.json").
+     * @param library    The JSON library to use (CUSTOM, ORG_JSON, or GSON).
      */
-    public JsonConfig(String path, String configName) {
+    public JsonConfig(String path, String configName, JsonLibrary library) {
         this.configPath = path;
         this.configName = configName;
+        this.library = library;
+
         File folder = new File(path);
-        File configFile = new File(path + "/" + this.configName);
-        if (!folder.exists()) folder.mkdir();
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        File configFile = new File(path, configName);
         if (!configFile.exists()) {
             try {
                 configFile.createNewFile();
-                this.jsonObject = new JSONObject();
+                // Initialize an empty JSON object based on the chosen library
+                switch (library) {
+                    case GSON -> gsonObject = new com.google.gson.JsonObject();
+                    case ORG_JSON -> orgJsonObject = new JSONObject();
+                    case CUSTOM -> customJsonObject = new JsonObject();
+                }
                 save();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return;
         }
-        String configJson = readFile(path + "/" + this.configName);
-        this.jsonObject = new JSONObject(configJson);
+
+        String configJson = readFile(configFile.getAbsolutePath());
+        try {
+            switch (library) {
+                case GSON -> gsonObject = JsonParser.parseString(configJson).getAsJsonObject();
+                case ORG_JSON -> orgJsonObject = new JSONObject(configJson);
+                case CUSTOM -> customJsonObject = JsonObject.parse(configJson);
+            }
+        } catch (Exception e) {
+            // In case of a parsing error, initialize an empty object.
+            switch (library) {
+                case GSON -> gsonObject = new com.google.gson.JsonObject();
+                case ORG_JSON -> orgJsonObject = new JSONObject();
+                case CUSTOM -> customJsonObject = new JsonObject();
+            }
+        }
     }
 
     @Override
     public void set(String key, Object value) {
-        this.jsonObject.put(key, value);
+        switch (library) {
+            case GSON -> gsonObject.add(key, GSON.toJsonTree(value));
+            case ORG_JSON -> orgJsonObject.put(key, value);
+            case CUSTOM -> customJsonObject.set(key, value);
+        }
         save();
     }
 
     @Override
     public void remove(String key) {
-        this.jsonObject.remove(key);
+        switch (library) {
+            case GSON -> gsonObject.remove(key);
+            case ORG_JSON -> orgJsonObject.remove(key);
+            case CUSTOM -> customJsonObject.remove(key);
+        }
         save();
     }
 
+    /**
+     * Returns the raw object for the given key.
+     *
+     * @param key the key.
+     * @return the underlying object.
+     */
     @Override
+    public Object getObject(String key) {
+        return switch (library) {
+            case GSON -> {
+                JsonElement element = gsonObject.get(key);
+                yield (element != null) ? GSON.fromJson(element, Object.class) : null;
+            }
+            case ORG_JSON -> orgJsonObject.opt(key);
+            case CUSTOM -> customJsonObject.get(key);
+        };
+    }
+
     public ObjectConverter get(String key) {
-        try {
-            Object object = this.jsonObject.get(key);
-            return new ObjectConverter(object);
-        } catch (JSONException e) {
-            return null;
-        }
+        return switch (library) {
+            case GSON -> {
+                JsonElement element = gsonObject.get(key);
+                yield (element != null) ? new ObjectConverter(GSON.fromJson(element, Object.class)) : null;
+            }
+            case ORG_JSON -> new ObjectConverter(orgJsonObject.opt(key));
+            case CUSTOM -> new ObjectConverter(customJsonObject.get(key));
+        };
     }
 
     @Override
@@ -67,28 +137,38 @@ public class JsonConfig implements Config {
         set(key, value);
     }
 
-    public JsonObject toJsonObject() {
-        return new JsonObject(jsonObject);
-    }
-
+    /**
+     * Saves the current JSON configuration to the file.
+     */
     public void save() {
-        try (FileWriter file = new FileWriter(configPath + "/" + configName)) {
-            file.write(this.jsonObject.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private String readFile(String filePath) {
-        StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
+        try (FileWriter writer = new FileWriter(configPath + "/" + configName)) {
+            switch (library) {
+                case GSON -> writer.write(GSON.toJson(gsonObject));
+                case ORG_JSON -> writer.write(orgJsonObject.toString(4));
+                case CUSTOM -> writer.write(customJsonObject.toJsonString());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return stringBuilder.toString();
     }
+
+    /**
+     * Reads the entire content of a file as a String.
+     *
+     * @param filePath The file path.
+     * @return The file content.
+     */
+    private String readFile(String filePath) {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return sb.toString();
+    }
+
 }
