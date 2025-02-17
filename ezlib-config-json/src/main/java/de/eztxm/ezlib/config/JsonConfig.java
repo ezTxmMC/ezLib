@@ -89,6 +89,7 @@ public class JsonConfig implements Config {
             case ORG_JSON -> orgJsonObject.put(key, value);
             case CUSTOM -> customJsonObject.set(key, value);
         }
+        System.out.println("set " + key + " to " + value);
         save();
     }
 
@@ -133,7 +134,7 @@ public class JsonConfig implements Config {
 
     @Override
     public void addDefault(String key, Object value) {
-        if (get(key) != null) return;
+        if (getObject(key) != null) return;
         set(key, value);
     }
 

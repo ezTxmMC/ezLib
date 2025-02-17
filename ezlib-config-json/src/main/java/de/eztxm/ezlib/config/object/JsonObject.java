@@ -20,6 +20,7 @@ public class JsonObject {
      */
     public JsonObject() {
         this.map = new LinkedHashMap<>();
+        System.out.println("Json object created");
     }
 
     /**
