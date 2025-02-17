@@ -141,13 +141,19 @@ public class JsonConfig implements Config {
      * Saves the current JSON configuration to the file.
      */
     public void save() {
+        System.out.println("Saving " + configName);
         try (FileWriter writer = new FileWriter(configPath + "/" + configName)) {
             switch (library) {
                 case GSON -> writer.write(GSON.toJson(gsonObject));
                 case ORG_JSON -> writer.write(orgJsonObject.toString(4));
-                case CUSTOM -> writer.write(customJsonObject.toJsonString());
+                case CUSTOM -> {
+                    System.out.println(customJsonObject.toJsonString());
+                    writer.write(customJsonObject.toJsonString());
+                    System.out.println("Saved " + configName);
+                }
             }
         } catch (IOException e) {
+            System.out.println("SAVE ERROR");
             throw new RuntimeException(e);
         }
     }
