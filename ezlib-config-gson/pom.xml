@@ -9,7 +9,7 @@
         <version>1.0-ALPHA11</version>
     </parent>
 
-    <artifactId>ezlib-database-sqlite</artifactId>
+    <artifactId>ezlib-config-gson</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -31,14 +31,21 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-database-core</artifactId>
-            <version>${project.parent.version}</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.12.1</version>
         </dependency>
         <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.48.0.0</version>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>26.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
