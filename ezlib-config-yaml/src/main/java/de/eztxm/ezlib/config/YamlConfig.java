@@ -54,7 +54,7 @@ public class YamlConfig implements Config {
     }
 
     @Override
-    public ObjectConverter get(String key) {
+    public ObjectConverter getObject(String key) {
         try {
             Object obj = this.yamlMapper.readValue(configFile, Object.class);
             Object value = ((Map<String, Object>) obj).get(key);
@@ -75,7 +75,7 @@ public class YamlConfig implements Config {
 
     @Override
     public void addDefault(String key, Object value) {
-        if (get(key) != null) return;
+        if (getObject(key) != null) return;
         set(key, value);
     }
 }
