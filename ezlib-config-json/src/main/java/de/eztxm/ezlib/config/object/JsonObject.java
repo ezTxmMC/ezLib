@@ -55,6 +55,9 @@ public class JsonObject {
      */
     public void set(String key, Object value) {
         map.put(key, value);
+        System.out.println("key = " + key);
+        System.out.println("value = " + value);
+        System.out.println("map.keySet() = " + map.keySet());
     }
 
     /**
@@ -100,6 +103,7 @@ public class JsonObject {
                     .append(valueToString(entry.getValue()));
         }
         sb.append("}");
+        System.out.println(sb);
         return sb.toString();
     }
 
