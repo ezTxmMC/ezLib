@@ -93,9 +93,7 @@ public class JsonConfig implements Config {
      */
     public void save() {
         try (FileWriter writer = new FileWriter(configPath + "/" + configName)) {
-            System.out.println(customJsonObject.toJsonString());
-            writer.write(customJsonObject.toJsonString());
-
+            writer.write(customJsonObject.toJsonString(true));
         } catch (
                 IOException e) {
             throw new RuntimeException(e);

@@ -77,6 +77,62 @@ public class JsonObject {
     }
 
     /**
+     * Produces a formatted JSON string.
+     *
+     * @param prettyPrint Whether to format the JSON with indentation.
+     * @return JSON string.
+     */
+    public String toJsonString(boolean prettyPrint) {
+        if (!prettyPrint) {
+            return toJsonString();
+        }
+        return formatJson(toJsonString(), 4); // Indent with 4 spaces
+    }
+
+    /**
+     * Formats a JSON string with indentation.
+     *
+     * @param json  The raw JSON string.
+     * @param indentFactor Number of spaces for indentation.
+     * @return Formatted JSON string.
+     */
+    private static String formatJson(String json, int indentFactor) {
+        StringBuilder formattedJson = new StringBuilder();
+        int indent = 0;
+        boolean inQuotes = false;
+
+        for (char c : json.toCharArray()) {
+            switch (c) {
+                case '{', '[' -> {
+                    formattedJson.append(c);
+                    if (!inQuotes) {
+                        formattedJson.append("\n").append(" ".repeat(indent += indentFactor));
+                    }
+                }
+                case '}', ']' -> {
+                    if (!inQuotes) {
+                        formattedJson.append("\n").append(" ".repeat(indent -= indentFactor));
+                    }
+                    formattedJson.append(c);
+                }
+                case '"' -> {
+                    formattedJson.append(c);
+                    inQuotes = !inQuotes;
+                }
+                case ',' -> {
+                    formattedJson.append(c);
+                    if (!inQuotes) {
+                        formattedJson.append("\n").append(" ".repeat(indent));
+                    }
+                }
+                case ':' -> formattedJson.append(c).append(" ");
+                default -> formattedJson.append(c);
+            }
+        }
+        return formattedJson.toString();
+    }
+
+    /**
      * Converts a given value into its JSON representation.
      *
      * @param value the value to convert.
