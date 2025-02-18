@@ -75,4 +75,4 @@ dependencies {
 
 ## ToDo-List
 
-- GSON-Handler by @ezTxmMC
+- Converter for org.json and google gson to ezlib json and in the other side
