@@ -4,9 +4,6 @@ import java.lang.reflect.Array;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONObject;            // External dependency for org.json
-import com.google.gson.JsonElement;     // External dependency for Gson
-
 /**
  * A simple standalone implementation of a JSON object.
  * Supports basic operations (set, get, remove) as well as minimal JSON output and parsing.
@@ -20,32 +17,6 @@ public class JsonObject {
      */
     public JsonObject() {
         this.map = new LinkedHashMap<>();
-        System.out.println("Json object created");
-    }
-
-    /**
-     * Constructs a JsonObject from an org.json.JSONObject.
-     *
-     * @param jsonObj the org.json.JSONObject
-     */
-    public JsonObject(JSONObject jsonObj) {
-        this();
-        for (String key : jsonObj.keySet()) {
-            this.set(key, jsonObj.get(key));
-        }
-    }
-
-    /**
-     * Constructs a JsonObject from a Gson JsonObject.
-     *
-     * @param gsonObj the Gson JsonObject.
-     */
-    public JsonObject(com.google.gson.JsonObject gsonObj) {
-        this();
-        for (Map.Entry<String, JsonElement> entry : gsonObj.entrySet()) {
-            // Convert the Gson element to a Java object using our parseValue method.
-            this.set(entry.getKey(), parseValue(entry.getValue().toString()));
-        }
     }
 
     /**
@@ -56,9 +27,6 @@ public class JsonObject {
      */
     public void set(String key, Object value) {
         map.put(key, value);
-        System.out.println("key = " + key);
-        System.out.println("value = " + value);
-        System.out.println("map.keySet() = " + map.keySet());
     }
 
     /**

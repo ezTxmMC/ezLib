@@ -139,18 +139,11 @@ public class ObjectConverter {
             if (object instanceof JsonObject) {
                 return (JsonObject) object;
             }
-            if (object instanceof org.json.JSONObject) {
-                return new JsonObject((org.json.JSONObject) object);
-            }
-            if (object instanceof com.google.gson.JsonObject) {
-                return new JsonObject((com.google.gson.JsonObject) object);
-            }
             if (object instanceof String) {
                 return JsonObject.parse((String) object);
             }
-            if (object instanceof Map) {
+            if (object instanceof Map<?, ?> map) {
                 JsonObject jObj = new JsonObject();
-                Map<?, ?> map = (Map<?, ?>) object;
                 for (Map.Entry<?, ?> entry : map.entrySet()) {
                     jObj.set(entry.getKey().toString(), entry.getValue());
                 }
@@ -165,7 +158,6 @@ public class ObjectConverter {
     /**
      * Attempts to interpret the object as a JsonArray.
      * - If it is already a JsonArray, it is returned.
-     * - If it is an org.json.JSONArray or a Gson JsonArray, a new JsonArray is created.
      * - If it is a JSON string, it is parsed.
      * - If it is a List, its elements are added to a new JsonArray.
      * - Otherwise, the object is wrapped as a single element in a JsonArray.
@@ -176,12 +168,6 @@ public class ObjectConverter {
         try {
             if (object instanceof JsonArray) {
                 return (JsonArray) object;
-            }
-            if (object instanceof org.json.JSONArray) {
-                return new JsonArray((org.json.JSONArray) object);
-            }
-            if (object instanceof com.google.gson.JsonArray) {
-                return new JsonArray((com.google.gson.JsonArray) object);
             }
             if (object instanceof String) {
                 return JsonArray.parse((String) object);

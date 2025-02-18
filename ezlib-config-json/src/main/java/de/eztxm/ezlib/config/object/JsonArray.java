@@ -6,8 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.json.JSONArray;            // External dependency for org.json
-import com.google.gson.JsonElement;     // External dependency for Gson
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple standalone implementation of a JSON array.
@@ -23,32 +22,6 @@ public class JsonArray implements Iterable<Object> {
      */
     public JsonArray() {
         this.list = new ArrayList<>();
-    }
-
-    /**
-     * Constructs a JsonArray from an org.json.JSONArray.
-     *
-     * @param jsonArray the org.json.JSONArray.
-     */
-    public JsonArray(JSONArray jsonArray) {
-        this();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            this.add(jsonArray.get(i));
-        }
-    }
-
-    /**
-     * Constructs a JsonArray from a Gson JsonArray.
-     *
-     * @param gsonArray the Gson JsonArray.
-     */
-    public JsonArray(com.google.gson.JsonArray gsonArray) {
-        this();
-        for (int i = 0; i < gsonArray.size(); i++) {
-            // Convert each element using parseValue on the element's string representation.
-            JsonElement elem = gsonArray.get(i);
-            this.add(JsonObject.parseValue(elem.toString()));
-        }
     }
 
     /**
@@ -70,6 +43,16 @@ public class JsonArray implements Iterable<Object> {
     }
 
     /**
+     * Check if a value is contained.
+     *
+     * @param value the value to check if is contained
+     * @return if is contained
+     */
+    public boolean contains(Object value) {
+        return list.contains(value);
+    }
+
+    /**
      * Retrieves the element at the specified index.
      *
      * @param index the index.
@@ -79,8 +62,17 @@ public class JsonArray implements Iterable<Object> {
         return list.get(index);
     }
 
+    /**
+     * Get the size of the json array.
+     *
+     * @return the count of elements in json array.
+     */
+    public int size() {
+        return list.size();
+    }
+
     @Override
-    public Iterator<Object> iterator() {
+    public @NotNull Iterator<Object> iterator() {
         return list.iterator();
     }
 
