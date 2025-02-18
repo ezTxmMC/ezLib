@@ -6,7 +6,7 @@
 
     <groupId>de.eztxm</groupId>
     <artifactId>ezLib</artifactId>
-    <version>1.0-ALPHA11</version>
+    <version>1.0-BETA1.indev</version>
 
     <packaging>pom</packaging>
 
@@ -23,6 +23,7 @@
         <module>ezlib-database-core</module>
         <module>ezlib-database-mariadb</module>
         <module>ezlib-database-mongodb</module>
+        <module>ezlib-database-sqlite</module>
         <module>ezlib-downloader</module>
     </modules>
 

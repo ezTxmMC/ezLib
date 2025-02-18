@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.eztxm</groupId>
         <artifactId>ezLib</artifactId>
-        <version>1.0-ALPHA11</version>
+        <version>1.0-BETA1.indev</version>
     </parent>
 
     <artifactId>ezlib-config-json</artifactId>
@@ -34,6 +34,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20250107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.12.1</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>

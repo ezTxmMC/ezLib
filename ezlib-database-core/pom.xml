@@ -6,10 +6,10 @@
     <parent>
         <groupId>de.eztxm</groupId>
         <artifactId>ezLib</artifactId>
-        <version>1.0-ALPHA11</version>
+        <version>1.0-BETA1.indev</version>
     </parent>
 
-    <artifactId>ezlib-database-core</artifactId>
+    <artifactId>ezlib-database-common</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

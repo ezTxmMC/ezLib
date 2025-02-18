@@ -3,92 +3,121 @@ package de.eztxm.ezlib.config;
 import de.eztxm.ezlib.api.config.Config;
 import de.eztxm.ezlib.config.object.JsonObject;
 import de.eztxm.ezlib.config.object.ObjectConverter;
-import org.json.JSONException;
-import org.json.JSONObject;
+import lombok.Getter;
 
 import java.io.*;
 
+/**
+ * A standalone configuration class that saves and loads JSON files.
+ */
+@Getter
 public class JsonConfig implements Config {
     private final String configPath;
     private final String configName;
-    private final JSONObject jsonObject;
-
+    private JsonObject customJsonObject;
 
     /**
-     * Creates a config file.
-     * @param path - The folder path where the config should be.
-     * @param configName - The Name of the config without the type-extension.
+     * Constructs a new JsonConfig.
+     *
+     * @param path       Path to the configuration folder.
+     * @param configName Name of the configuration file (e.g., "config.json").
      */
     public JsonConfig(String path, String configName) {
         this.configPath = path;
         this.configName = configName;
+
         File folder = new File(path);
-        File configFile = new File(path + "/" + this.configName);
-        if (!folder.exists()) folder.mkdir();
+        if (!folder.exists()) {
+            if (folder.mkdirs()) {
+                System.out.println("Created folder " + path);
+            }
+        }
+
+        File configFile = new File(path, configName);
         if (!configFile.exists()) {
             try {
-                configFile.createNewFile();
-                this.jsonObject = new JSONObject();
-                save();
+                if (configFile.createNewFile()) {
+                    // Initialize an empty JSON object based on the chosen library
+                    customJsonObject = new JsonObject();
+                    save();
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return;
         }
-        String configJson = readFile(path + "/" + this.configName);
-        this.jsonObject = new JSONObject(configJson);
+
+        String configJson = readFile(configFile.getAbsolutePath());
+        try {
+            customJsonObject = JsonObject.parse(configJson);
+        } catch (Exception e) {
+            customJsonObject = new JsonObject();
+        }
     }
 
     @Override
     public void set(String key, Object value) {
-        this.jsonObject.put(key, value);
+        customJsonObject.set(key, value);
         save();
     }
 
     @Override
     public void remove(String key) {
-        this.jsonObject.remove(key);
+        customJsonObject.remove(key);
         save();
     }
 
+    /**
+     * Returns the raw object for the given key.
+     *
+     * @param key the key.
+     * @return the underlying object.
+     */
     @Override
+    public Object getObject(String key) {
+        return customJsonObject.get(key);
+    }
+
     public ObjectConverter get(String key) {
-        try {
-            Object object = this.jsonObject.get(key);
-            return new ObjectConverter(object);
-        } catch (JSONException e) {
-            return null;
-        }
+        return new ObjectConverter(customJsonObject.get(key));
     }
 
     @Override
     public void addDefault(String key, Object value) {
-        if (get(key) != null) return;
+        if (getObject(key) != null) return;
         set(key, value);
     }
 
-    public JsonObject toJsonObject() {
-        return new JsonObject(jsonObject);
-    }
-
+    /**
+     * Saves the current JSON configuration to the file.
+     */
     public void save() {
-        try (FileWriter file = new FileWriter(configPath + "/" + configName)) {
-            file.write(this.jsonObject.toString());
-        } catch (IOException e) {
+        try (FileWriter writer = new FileWriter(configPath + "/" + configName)) {
+            System.out.println(customJsonObject.toJsonString());
+            writer.write(customJsonObject.toJsonString());
+
+        } catch (
+                IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Reads the entire content of a file as a String.
+     *
+     * @param filePath The file path.
+     * @return The file content.
+     */
     private String readFile(String filePath) {
-        StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return stringBuilder.toString();
+        return sb.toString();
     }
 }
