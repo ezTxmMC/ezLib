@@ -18,7 +18,7 @@
   - MariaDB
   - MongoDB
 - Object Converter
-- Better JsonObject and JsonArray
+- Own JsonObject and JsonArray
 
 ## Dependency
 
