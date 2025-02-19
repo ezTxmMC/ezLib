@@ -1,5 +1,6 @@
 package de.eztxm.ezlib.config;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.toml.TomlMapper;
 import de.eztxm.ezlib.api.config.Config;
@@ -33,9 +34,10 @@ public class TomlConfig implements Config {
     @Override
     public void set(String key, Object value) {
         try {
-            Object obj = this.tomlMapper.readValue(configFile, Object.class);
-            ((Map<String, Object>) obj).put(key, value);
-            this.tomlMapper.writeValue(configFile, obj);
+            Map<String, Object> map = this.tomlMapper.readValue(configFile, new TypeReference<>() {
+            });
+            map.put(key, value);
+            this.tomlMapper.writeValue(configFile, map);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -44,9 +46,10 @@ public class TomlConfig implements Config {
     @Override
     public void remove(String key) {
         try {
-            Object obj = this.tomlMapper.readValue(configFile, Object.class);
-            ((Map<String, Object>) obj).remove(key);
-            this.tomlMapper.writeValue(configFile, obj);
+            Map<String, Object> map = this.tomlMapper.readValue(configFile, new TypeReference<>() {
+            });
+            map.remove(key);
+            this.tomlMapper.writeValue(configFile, map);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -55,8 +58,9 @@ public class TomlConfig implements Config {
     @Override
     public ObjectConverter getObject(String key) {
         try {
-            Object obj = this.tomlMapper.readValue(configFile, Object.class);
-            Object value = ((Map<String, Object>) obj).get(key);
+            Map<String, Object> map = this.tomlMapper.readValue(configFile, new TypeReference<>() {
+            });
+            Object value = map.get(key);
             if (value == null) {
                 return null;
             }

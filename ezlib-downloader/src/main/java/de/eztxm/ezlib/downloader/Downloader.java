@@ -36,9 +36,13 @@ public class Downloader {
             inputStream.close();
 
             System.out.println("File downloaded to " + saveFilePath);
-        } else {
-            System.out.println("No file to download. Server replied HTTP code: " + responseCode);
+            return;
         }
+        if (responseCode == HttpURLConnection.HTTP_FORBIDDEN) {
+            // TODO: Basic Auth
+            return;
+        }
+        System.out.println("No file to download. Server replied HTTP code: " + responseCode);
         connection.disconnect();
     }
 }

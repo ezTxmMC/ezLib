@@ -1,5 +1,6 @@
 package de.eztxm.ezlib.config;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
@@ -34,8 +35,9 @@ public class YamlConfig implements Config {
     @Override
     public void set(String key, Object value) {
         try {
-            Object map = this.yamlMapper.readValue(configFile, Object.class);
-            ((Map<String, Object>) map).put(key, value);
+            Map<String, Object> map = this.yamlMapper.readValue(configFile, new TypeReference<>() {
+            });
+            map.put(key, value);
             this.yamlMapper.writeValue(configFile, map);
         } catch (IOException e) {
             e.fillInStackTrace();
@@ -45,9 +47,10 @@ public class YamlConfig implements Config {
     @Override
     public void remove(String key) {
         try {
-            Object obj = this.yamlMapper.readValue(configFile, Object.class);
-            ((Map<String, Object>) obj).remove(key);
-            this.yamlMapper.writeValue(configFile, obj);
+            Map<String, Object> map = this.yamlMapper.readValue(configFile, new TypeReference<>() {
+            });
+            map.remove(key);
+            this.yamlMapper.writeValue(configFile, map);
         } catch (IOException e) {
             e.fillInStackTrace();
         }
@@ -56,8 +59,9 @@ public class YamlConfig implements Config {
     @Override
     public ObjectConverter getObject(String key) {
         try {
-            Object obj = this.yamlMapper.readValue(configFile, Object.class);
-            Object value = ((Map<String, Object>) obj).get(key);
+            Map<String, Object> map = this.yamlMapper.readValue(configFile, new TypeReference<>() {
+            });
+            Object value = map.get(key);
             return new ObjectConverter(value);
         } catch (IOException e) {
             return null;
@@ -66,8 +70,9 @@ public class YamlConfig implements Config {
 
     public Object getAsObject(String key) {
         try {
-            Object obj = this.yamlMapper.readValue(configFile, Object.class);
-            return ((Map<String, Object>) obj).get(key);
+            Map<String, Object> map = this.yamlMapper.readValue(configFile, new TypeReference<>() {
+            });
+            return map.get(key);
         } catch (IOException e) {
             return null;
         }

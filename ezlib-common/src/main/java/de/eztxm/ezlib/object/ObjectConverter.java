@@ -43,13 +43,22 @@ public class ObjectConverter {
         return 0;
     }
 
+    public long asLong() {
+        try {
+            return (long) object;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return 0L;
+    }
+
     public double asDouble() {
         try {
             return (double) object;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return 0;
+        return 0d;
     }
 
     public float asFloat() {
@@ -58,7 +67,7 @@ public class ObjectConverter {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return 0;
+        return 0f;
     }
 
     public List<Object> asList() {
