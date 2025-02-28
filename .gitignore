@@ -42,3 +42,4 @@ build/
 /.idea/
 /.idea
 /data/
+/config.json

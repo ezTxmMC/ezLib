@@ -12,8 +12,9 @@ import java.io.*;
  */
 @Getter
 public class JsonConfig implements Config {
-    private final String configPath;
-    private final String configName;
+    private String configPath;
+    private String configName;
+    private boolean autoSave;
     private JsonObject customJsonObject;
 
     /**
@@ -23,30 +24,33 @@ public class JsonConfig implements Config {
      * @param configName Name of the configuration file (e.g., "config.json").
      */
     public JsonConfig(String path, String configName) {
+        new JsonConfig(path, configName);
+    }
+
+    public JsonConfig(String path, String configName, boolean autoSave) {
         this.configPath = path;
         this.configName = configName;
-
+        this.autoSave = autoSave;
         File folder = new File(path);
         if (!folder.exists()) {
             if (folder.mkdirs()) {
                 System.out.println("Created folder " + path);
             }
         }
-
         File configFile = new File(path, configName);
         if (!configFile.exists()) {
             try {
                 if (configFile.createNewFile()) {
-                    // Initialize an empty JSON object based on the chosen library
                     customJsonObject = new JsonObject();
-                    save();
+                    if (autoSave) {
+                        save();
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return;
         }
-
         String configJson = readFile(configFile.getAbsolutePath());
         try {
             customJsonObject = JsonObject.parse(configJson);
@@ -58,13 +62,17 @@ public class JsonConfig implements Config {
     @Override
     public void set(String key, Object value) {
         customJsonObject.set(key, value);
-        save();
+        if (autoSave) {
+            save();
+        }
     }
 
     @Override
     public void remove(String key) {
         customJsonObject.remove(key);
-        save();
+        if (autoSave) {
+            save();
+        }
     }
 
     /**
