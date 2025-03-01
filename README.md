@@ -19,6 +19,7 @@
   - MongoDB
 - Object Converter
 - Own JsonObject and JsonArray
+- JsonClassConfig and JsonClassElement Annotation for class configuration
 
 ## Dependency
 
