@@ -24,7 +24,7 @@ public class JsonConfig implements Config {
      * @param configName Name of the configuration file (e.g., "config.json").
      */
     public JsonConfig(String path, String configName) {
-        new JsonConfig(path, configName);
+        this(path, configName, true);
     }
 
     public JsonConfig(String path, String configName, boolean autoSave) {
