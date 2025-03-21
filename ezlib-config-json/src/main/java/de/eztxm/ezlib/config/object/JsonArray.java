@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,15 +14,16 @@ import org.jetbrains.annotations.NotNull;
  * Supports basic operations such as adding, removing, and retrieving values,
  * as well as producing a JSON-formatted string and parsing a JSON string.
  */
+@Getter
 public class JsonArray implements Iterable<Object> {
 
-    private final List<Object> list;
+    private final List<Object> elements;
 
     /**
      * Creates an empty JsonArray.
      */
     public JsonArray() {
-        this.list = new ArrayList<>();
+        this.elements = new ArrayList<>();
     }
 
     /**
@@ -30,7 +32,7 @@ public class JsonArray implements Iterable<Object> {
      * @param value the value to add (e.g., String, Number, Boolean, JsonObject, JsonArray, array, or Iterable).
      */
     public void add(Object value) {
-        list.add(value);
+        elements.add(value);
     }
 
     /**
@@ -39,7 +41,7 @@ public class JsonArray implements Iterable<Object> {
      * @param index the index of the element to remove.
      */
     public void remove(int index) {
-        list.remove(index);
+        elements.remove(index);
     }
 
     /**
@@ -49,7 +51,7 @@ public class JsonArray implements Iterable<Object> {
      * @return if is contained
      */
     public boolean contains(Object value) {
-        return list.contains(value);
+        return elements.contains(value);
     }
 
     /**
@@ -59,7 +61,7 @@ public class JsonArray implements Iterable<Object> {
      * @return the element at that position.
      */
     public Object get(int index) {
-        return list.get(index);
+        return elements.get(index);
     }
 
     /**
@@ -68,17 +70,17 @@ public class JsonArray implements Iterable<Object> {
      * @return the count of elements in json array.
      */
     public int size() {
-        return list.size();
+        return elements.size();
     }
 
     @Override
     public @NotNull Iterator<Object> iterator() {
-        return list.iterator();
+        return elements.iterator();
     }
 
     @Override
     public void forEach(Consumer<? super Object> action) {
-        list.forEach(action);
+        elements.forEach(action);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class JsonArray implements Iterable<Object> {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         boolean first = true;
-        for (Object value : list) {
+        for (Object value : elements) {
             if (!first) {
                 sb.append(",");
             } else {

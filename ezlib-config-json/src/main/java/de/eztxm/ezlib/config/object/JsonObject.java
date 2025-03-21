@@ -1,5 +1,7 @@
 package de.eztxm.ezlib.config.object;
 
+import lombok.Getter;
+
 import java.lang.reflect.Array;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -8,15 +10,16 @@ import java.util.Map;
  * A simple standalone implementation of a JSON object.
  * Supports basic operations (set, get, remove) as well as minimal JSON output and parsing.
  */
+@Getter
 public class JsonObject {
 
-    private final Map<String, Object> map;
+    private final Map<String, Object> elements;
 
     /**
      * Creates an empty JsonObject.
      */
     public JsonObject() {
-        this.map = new LinkedHashMap<>();
+        this.elements = new LinkedHashMap<>();
     }
 
     /**
@@ -26,7 +29,7 @@ public class JsonObject {
      * @param value the value.
      */
     public void set(String key, Object value) {
-        map.put(key, value);
+        elements.put(key, value);
     }
 
     /**
@@ -35,7 +38,7 @@ public class JsonObject {
      * @param key the key.
      */
     public void remove(String key) {
-        map.remove(key);
+        elements.remove(key);
     }
 
     /**
@@ -45,7 +48,7 @@ public class JsonObject {
      * @return the corresponding value or null if not found.
      */
     public Object get(String key) {
-        return map.get(key);
+        return elements.get(key);
     }
 
     @Override
@@ -62,7 +65,7 @@ public class JsonObject {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         boolean first = true;
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
+        for (Map.Entry<String, Object> entry : elements.entrySet()) {
             if (!first) {
                 sb.append(",");
             } else {
