@@ -18,6 +18,9 @@ public class JsonProcessor<T> {
     public JsonProcessor(T instance) {
         this.instance = instance;
         JsonClassConfig configuration = instance.getClass().getAnnotation(JsonClassConfig.class);
+        if (configuration == null) {
+            throw new IllegalStateException("Klasse " + instance.getClass().getName() + " hat keine JsonClassConfig-Annotation!");
+        }
         this.config = new JsonConfig(configuration.path(), configuration.fileName(), false);
     }
 
@@ -33,25 +36,26 @@ public class JsonProcessor<T> {
         }
     }
 
+    @SneakyThrows
     public void saveConfiguration() {
-        this.process();
-        this.config.save();
+        process();
+        config.save();
     }
 
     @SneakyThrows
     public static <T> JsonProcessor<T> loadConfiguration(Class<T> clazz) {
         JsonClassConfig configuration = clazz.getAnnotation(JsonClassConfig.class);
         if (configuration == null) {
-            return null;
+            throw new IllegalStateException("Klasse " + clazz.getName() + " hat keine JsonClassConfig-Annotation!");
         }
         File file = new File(configuration.path() + "/" + configuration.fileName());
         ObjectMapper objectMapper = new ObjectMapper();
         T instance;
-        if (file.exists()) {
+        if (file.exists() && file.length() > 0) {
             instance = objectMapper.readValue(file, clazz);
-        } else {
-            instance = clazz.getDeclaredConstructor().newInstance();
+            return new JsonProcessor<>(instance);
         }
+        instance = clazz.getDeclaredConstructor().newInstance();
         return new JsonProcessor<>(instance);
     }
 }

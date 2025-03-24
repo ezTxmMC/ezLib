@@ -52,6 +52,10 @@ public class JsonConfig implements Config {
             return;
         }
         String configJson = readFile(configFile.getAbsolutePath());
+        if(configJson.trim().isEmpty()){
+            customJsonObject = new JsonObject();
+            return;
+        }
         try {
             customJsonObject = JsonObject.parse(configJson);
         } catch (Exception e) {
@@ -102,8 +106,7 @@ public class JsonConfig implements Config {
     public void save() {
         try (FileWriter writer = new FileWriter(configPath + "/" + configName)) {
             writer.write(customJsonObject.toJsonString(true));
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

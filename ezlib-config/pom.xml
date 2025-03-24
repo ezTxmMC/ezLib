@@ -10,6 +10,14 @@
     </parent>
 
     <artifactId>ezlib-config</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>json</module>
+        <module>properties</module>
+        <module>toml</module>
+        <module>yaml</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -27,22 +35,22 @@
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-config-json</artifactId>
+            <artifactId>json</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-config-properties</artifactId>
+            <artifactId>properties</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-config-toml</artifactId>
+            <artifactId>toml</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-config-yaml</artifactId>
+            <artifactId>yaml</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
