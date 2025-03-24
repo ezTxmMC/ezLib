@@ -5,14 +5,19 @@ import de.eztxm.ezlib.config.object.JsonObject;
 import de.eztxm.ezlib.config.object.ObjectConverter;
 import lombok.Getter;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * A standalone configuration class that saves and loads JSON files.
  */
 @Getter
 public class JsonConfig implements Config {
-    private String configPath;
+    private final Path configFolder;
     private String configName;
     private boolean autoSave;
     private JsonObject customJsonObject;
@@ -28,38 +33,34 @@ public class JsonConfig implements Config {
     }
 
     public JsonConfig(String path, String configName, boolean autoSave) {
-        this.configPath = path;
+        this.configFolder = Paths.get(path);
         this.configName = configName;
         this.autoSave = autoSave;
-        File folder = new File(path);
-        if (!folder.exists()) {
-            if (folder.mkdirs()) {
-                System.out.println("Created folder " + path);
-            }
-        }
-        File configFile = new File(path, configName);
-        if (!configFile.exists()) {
-            try {
-                if (configFile.createNewFile()) {
-                    customJsonObject = new JsonObject();
-                    if (autoSave) {
-                        save();
-                    }
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            return;
-        }
-        String configJson = readFile(configFile.getAbsolutePath());
-        if(configJson.trim().isEmpty()){
-            customJsonObject = new JsonObject();
-            return;
-        }
         try {
-            customJsonObject = JsonObject.parse(configJson);
-        } catch (Exception e) {
-            customJsonObject = new JsonObject();
+            if (Files.notExists(configFolder)) {
+                Files.createDirectories(configFolder);
+            }
+            Path configFile = configFolder.resolve(configName);
+            if (Files.notExists(configFile)) {
+                Files.createFile(configFile);
+                customJsonObject = new JsonObject();
+                if (autoSave) {
+                    save();
+                }
+                return;
+            }
+            String configJson = Files.readString(configFile);
+            if (configJson.trim().isEmpty()) {
+                customJsonObject = new JsonObject();
+                return;
+            }
+            try {
+                customJsonObject = JsonObject.parse(configJson);
+            } catch (Exception e) {
+                customJsonObject = new JsonObject();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Fehler beim Initialisieren der Konfiguration: " + e.getMessage(), e);
         }
     }
 
@@ -104,29 +105,11 @@ public class JsonConfig implements Config {
      * Saves the current JSON configuration to the file.
      */
     public void save() {
-        try (FileWriter writer = new FileWriter(configPath + "/" + configName)) {
-            writer.write(customJsonObject.toJsonString(true));
+        Path configFile = configFolder.resolve(configName);
+        try {
+            Files.writeString(configFile, customJsonObject.toJsonString(true));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Fehler beim Speichern der Konfiguration: " + e.getMessage(), e);
         }
-    }
-
-    /**
-     * Reads the entire content of a file as a String.
-     *
-     * @param filePath The file path.
-     * @return The file content.
-     */
-    private String readFile(String filePath) {
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return sb.toString();
     }
 }
