@@ -4,11 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>de.eztxm</groupId>
-        <artifactId>ezLib</artifactId>
+        <groupId>de.eztxm.ezlib</groupId>
+        <artifactId>ezlib-config</artifactId>
         <version>1.0-BETA1.indev3</version>
     </parent>
 
+    <groupId>de.eztxm.ezlib.config</groupId>
     <artifactId>toml</artifactId>
 
     <properties>
@@ -26,12 +27,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
+            <groupId>de.eztxm</groupId>
             <artifactId>ezlib-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
+            <groupId>de.eztxm</groupId>
             <artifactId>ezlib-common</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

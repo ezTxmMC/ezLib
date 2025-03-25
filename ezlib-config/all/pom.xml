@@ -4,12 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>de.eztxm</groupId>
-        <artifactId>ezLib</artifactId>
+        <groupId>de.eztxm.ezlib</groupId>
+        <artifactId>ezlib-config</artifactId>
         <version>1.0-BETA1.indev3</version>
     </parent>
 
-    <artifactId>ezlib-database-common</artifactId>
+    <groupId>de.eztxm.ezlib.config</groupId>
+    <artifactId>all</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -19,19 +20,24 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-common</artifactId>
+            <groupId>de.eztxm.ezlib.config</groupId>
+            <artifactId>json</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>6.3.0</version>
+            <groupId>de.eztxm.ezlib.config</groupId>
+            <artifactId>properties</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.36</version>
+            <groupId>de.eztxm.ezlib.config</groupId>
+            <artifactId>toml</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.eztxm.ezlib.config</groupId>
+            <artifactId>yaml</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 

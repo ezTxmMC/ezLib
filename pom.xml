@@ -16,10 +16,6 @@
         <module>ezlib-config</module>
         <module>ezlib-common</module>
         <module>ezlib-database</module>
-        <module>ezlib-database-core</module>
-        <module>ezlib-database-mariadb</module>
-        <module>ezlib-database-mongodb</module>
-        <module>ezlib-database-sqlite</module>
         <module>ezlib-downloader</module>
     </modules>
 

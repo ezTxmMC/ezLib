@@ -31,13 +31,13 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-config</artifactId>
+            <groupId>de.eztxm.ezlib.config</groupId>
+            <artifactId>all</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>ezlib-database</artifactId>
+            <groupId>de.eztxm.ezlib.database</groupId>
+            <artifactId>all</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

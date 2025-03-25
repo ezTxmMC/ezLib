@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>de.eztxm.ezlib</groupId>
-        <artifactId>ezlib-config</artifactId>
+        <artifactId>ezlib-database</artifactId>
         <version>1.0-BETA1.indev3</version>
     </parent>
 
-    <groupId>de.eztxm.ezlib.config</groupId>
-    <artifactId>properties</artifactId>
+    <groupId>de.eztxm.ezlib.database</groupId>
+    <artifactId>mariadb</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -29,17 +29,17 @@
         <dependency>
             <groupId>de.eztxm</groupId>
             <artifactId>ezlib-api</artifactId>
+            <version>1.0-BETA1.indev3</version>
+        </dependency>
+        <dependency>
+            <groupId>de.eztxm.ezlib.database</groupId>
+            <artifactId>common</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.eztxm</groupId>
-            <artifactId>ezlib-common</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-properties</artifactId>
-            <version>2.18.3</version>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.5.2</version>
         </dependency>
     </dependencies>
 
