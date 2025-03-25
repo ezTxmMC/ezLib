@@ -6,7 +6,7 @@
 
     <groupId>de.eztxm</groupId>
     <artifactId>ezLib</artifactId>
-    <version>1.0-BETA1.indev2</version>
+    <version>1.0-BETA1.indev3</version>
 
     <packaging>pom</packaging>
 
@@ -14,10 +14,6 @@
         <module>ezlib-all</module>
         <module>ezlib-api</module>
         <module>ezlib-config</module>
-        <module>ezlib-config-json</module>
-        <module>ezlib-config-properties</module>
-        <module>ezlib-config-toml</module>
-        <module>ezlib-config-yaml</module>
         <module>ezlib-common</module>
         <module>ezlib-database</module>
         <module>ezlib-database-core</module>

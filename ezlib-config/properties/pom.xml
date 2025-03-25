@@ -6,10 +6,10 @@
     <parent>
         <groupId>de.eztxm</groupId>
         <artifactId>ezLib</artifactId>
-        <version>1.0-BETA1.indev2</version>
+        <version>1.0-BETA1.indev3</version>
     </parent>
 
-    <artifactId>ezlib-config-yaml</artifactId>
+    <artifactId>properties</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
+            <artifactId>jackson-dataformat-properties</artifactId>
             <version>2.18.3</version>
         </dependency>
     </dependencies>

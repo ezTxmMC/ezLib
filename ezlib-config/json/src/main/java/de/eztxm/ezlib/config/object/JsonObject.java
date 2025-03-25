@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.lang.reflect.Array;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,14 +69,12 @@ public class JsonObject {
         for (Map.Entry<String, Object> entry : elements.entrySet()) {
             if (!first) {
                 sb.append(",");
-            } else {
-                first = false;
             }
+            first = false;
             sb.append("\"").append(escape(entry.getKey())).append("\":")
                     .append(valueToString(entry.getValue()));
         }
         sb.append("}");
-        System.out.println(sb); // TODO: REMOVE
         return sb.toString();
     }
 
@@ -86,10 +85,8 @@ public class JsonObject {
      * @return JSON string.
      */
     public String toJsonString(boolean prettyPrint) {
-        if (!prettyPrint) {
-            return toJsonString();
-        }
-        return formatJson(toJsonString(), 4); // Indent with 4 spaces
+        if (!prettyPrint) return toJsonString();
+        return formatJson(toJsonString(), 4);
     }
 
     /**
@@ -103,18 +100,19 @@ public class JsonObject {
         StringBuilder formattedJson = new StringBuilder();
         int indent = 0;
         boolean inQuotes = false;
-
         for (char c : json.toCharArray()) {
             switch (c) {
                 case '{', '[' -> {
                     formattedJson.append(c);
                     if (!inQuotes) {
-                        formattedJson.append("\n").append(" ".repeat(indent += indentFactor));
+                        indent += indentFactor;
+                        formattedJson.append("\n").append(" ".repeat(indent));
                     }
                 }
                 case '}', ']' -> {
                     if (!inQuotes) {
-                        formattedJson.append("\n").append(" ".repeat(indent -= indentFactor));
+                        indent -= indentFactor;
+                        formattedJson.append("\n").append(" ".repeat(indent));
                     }
                     formattedJson.append(c);
                 }
@@ -128,7 +126,12 @@ public class JsonObject {
                         formattedJson.append("\n").append(" ".repeat(indent));
                     }
                 }
-                case ':' -> formattedJson.append(c).append(" ");
+                case ':' -> {
+                    formattedJson.append(c);
+                    if (!inQuotes) {
+                        formattedJson.append(" ");
+                    }
+                }
                 default -> formattedJson.append(c);
             }
         }
@@ -142,45 +145,35 @@ public class JsonObject {
      * @return the JSON string representation.
      */
     private String valueToString(Object value) {
-        if (value == null) {
-            return "null";
-        } else if (value instanceof String) {
-            return "\"" + escape((String) value) + "\"";
-        } else if (value instanceof Number || value instanceof Boolean) {
-            return value.toString();
-        } else if (value instanceof JsonObject || value instanceof JsonArray) {
-            return value.toString();
-        } else if (value instanceof Iterable) {
+        if (value == null) return "null";
+        if (value instanceof String) return "\"" + escape((String) value) + "\"";
+        if (value instanceof Number || value instanceof Boolean) return value.toString();
+        if (value instanceof JsonObject || value instanceof JsonArray) return value.toString();
+        if (value instanceof Iterable) {
             StringBuilder sb = new StringBuilder();
             sb.append("[");
             boolean first = true;
             for (Object item : (Iterable<?>) value) {
-                if (!first) {
-                    sb.append(",");
-                } else {
-                    first = false;
-                }
+                if (!first) sb.append(",");
+                first = false;
                 sb.append(valueToString(item));
             }
             sb.append("]");
             return sb.toString();
-        } else if (value.getClass().isArray()) {
+        }
+        if (value.getClass().isArray()) {
             StringBuilder sb = new StringBuilder();
             sb.append("[");
             int len = Array.getLength(value);
             for (int i = 0; i < len; i++) {
-                if (i > 0) {
-                    sb.append(",");
-                }
+                if (i > 0) sb.append(",");
                 Object item = Array.get(value, i);
                 sb.append(valueToString(item));
             }
             sb.append("]");
             return sb.toString();
-        } else {
-            // Fallback: use toString() and treat the result as a String.
-            return "\"" + escape(value.toString()) + "\"";
         }
+        return "\"" + escape(value.toString()) + "\"";
     }
 
     /**
@@ -210,25 +203,18 @@ public class JsonObject {
     public static JsonObject parse(String json) {
         JsonObject obj = new JsonObject();
         json = json.trim();
-        if (!json.startsWith("{") || !json.endsWith("}")) {
+        if (!json.startsWith("{") || !json.endsWith(" "))
             throw new IllegalArgumentException("Invalid JSON object");
-        }
-        // Remove the outer curly braces.
         json = json.substring(1, json.length() - 1).trim();
-        if (json.isEmpty()) {
-            return obj;
-        }
-        // Split on commas not inside quotes.
+        if (json.isEmpty()) return obj;
         String[] pairs = json.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
         for (String pair : pairs) {
             String[] keyValue = pair.split(":(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", 2);
             if (keyValue.length != 2) continue;
             String key = keyValue[0].trim();
             String value = keyValue[1].trim();
-            // Remove quotes from the key.
-            if (key.startsWith("\"") && key.endsWith("\"")) {
+            if (key.startsWith("\"") && key.endsWith("\""))
                 key = key.substring(1, key.length() - 1);
-            }
             Object parsedValue = parseValue(value);
             obj.set(key, parsedValue);
         }
@@ -242,30 +228,61 @@ public class JsonObject {
      * @return the corresponding Java object (String, Number, Boolean, or null).
      */
     public static Object parseValue(String value) {
-        switch (value) {
-            case "null" -> {
-                return null;
-            }
-            case "true" -> {
-                return Boolean.TRUE;
-            }
-            case "false" -> {
-                return Boolean.FALSE;
-            }
-        }
-        if (value.startsWith("\"") && value.endsWith("\"")) {
+        if (value.equals("null")) return null;
+        if (value.equals("true")) return Boolean.TRUE;
+        if (value.equals("false")) return Boolean.FALSE;
+        if (value.startsWith("\"") && value.endsWith("\""))
             return unescape(value.substring(1, value.length() - 1));
-        }
         try {
-            if (value.contains(".")) {
-                return Double.parseDouble(value);
-            } else {
-                return Integer.parseInt(value);
-            }
+            if (value.contains(".")) return Double.parseDouble(value);
+            return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            // Fallback: return the value as a String.
             return value;
         }
+    }
+
+
+    public JsonObject deepCopy() {
+        JsonObject copy = new JsonObject();
+        for (Map.Entry<String, Object> entry : elements.entrySet()) {
+            copy.set(entry.getKey(), deepCopyValue(entry.getValue()));
+        }
+        return copy;
+    }
+
+    private static Object deepCopyValue(Object value) {
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof JsonObject) {
+            return ((JsonObject) value).deepCopy();
+        }
+        if (value instanceof JsonArray) {
+            return ((JsonArray) value).deepCopy();
+        }
+        if (value instanceof List<?>) {
+            List<Object> copyList = new java.util.ArrayList<>();
+            for (Object item : (List<?>) value) {
+                copyList.add(deepCopyValue(item));
+            }
+            return copyList;
+        }
+        if (value instanceof Map<?, ?>) {
+            Map<Object, Object> copyMap = new LinkedHashMap<>();
+            for (Map.Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {
+                copyMap.put(entry.getKey(), deepCopyValue(entry.getValue()));
+            }
+            return copyMap;
+        }
+        if (value.getClass().isArray()) {
+            int len = Array.getLength(value);
+            Object copyArray = Array.newInstance(value.getClass().getComponentType(), len);
+            for (int i = 0; i < len; i++) {
+                Array.set(copyArray, i, deepCopyValue(Array.get(value, i)));
+            }
+            return copyArray;
+        }
+        return value;
     }
 
     /**

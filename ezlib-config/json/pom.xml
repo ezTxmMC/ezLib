@@ -6,10 +6,10 @@
     <parent>
         <groupId>de.eztxm</groupId>
         <artifactId>ezLib</artifactId>
-        <version>1.0-BETA1.indev2</version>
+        <version>1.0-BETA1.indev3</version>
     </parent>
 
-    <artifactId>ezlib-config-json</artifactId>
+    <artifactId>json</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
