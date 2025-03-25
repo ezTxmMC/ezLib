@@ -3,26 +3,27 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>de.eztxm</groupId>
+        <artifactId>ezlib</artifactId>
+        <version>1.0-BETA1.indev3</version>
+    </parent>
 
-    <groupId>de.eztxm</groupId>
-    <artifactId>ezlib</artifactId>
-    <version>1.0-BETA1.indev3</version>
-
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>all</module>
-        <module>api</module>
-        <module>config</module>
-        <module>common</module>
-        <module>database</module>
-        <module>downloader</module>
-    </modules>
+    <groupId>de.eztxm.ezlib</groupId>
+    <artifactId>api</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>6.3.0</version>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -3,20 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>de.eztxm</groupId>
+        <artifactId>ezlib</artifactId>
+        <version>1.0-BETA1.indev3</version>
+    </parent>
 
-    <groupId>de.eztxm</groupId>
-    <artifactId>ezlib</artifactId>
-    <version>1.0-BETA1.indev3</version>
+    <groupId>de.eztxm.ezlib</groupId>
+    <artifactId>config</artifactId>
 
     <packaging>pom</packaging>
 
     <modules>
         <module>all</module>
-        <module>api</module>
-        <module>config</module>
-        <module>common</module>
-        <module>database</module>
-        <module>downloader</module>
+        <module>json</module>
+        <module>properties</module>
+        <module>toml</module>
+        <module>yaml</module>
     </modules>
 
     <properties>
