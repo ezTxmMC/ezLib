@@ -228,9 +228,17 @@ public class JsonObject {
      * @return the corresponding Java object (String, Number, Boolean, or null).
      */
     public static Object parseValue(String value) {
-        if (value.equals("null")) return null;
-        if (value.equals("true")) return Boolean.TRUE;
-        if (value.equals("false")) return Boolean.FALSE;
+        switch (value) {
+            case "null" -> {
+                return null;
+            }
+            case "true" -> {
+                return Boolean.TRUE;
+            }
+            case "false" -> {
+                return Boolean.FALSE;
+            }
+        }
         if (value.startsWith("\"") && value.endsWith("\""))
             return unescape(value.substring(1, value.length() - 1));
         try {
