@@ -1,7 +1,5 @@
 package de.eztxm.ezlib.config.object;
 
-import de.eztxm.ezlib.config.JsonConfig;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -11,16 +9,9 @@ import java.util.Map;
  * Provides methods to interpret the underlying object as a specific type.
  */
 public class ObjectConverter {
-    private final JsonConfig jsonConfig;
     private final Object object;
 
-    public ObjectConverter(JsonConfig jsonConfig, Object object) {
-        this.jsonConfig = jsonConfig;
-        this.object = object;
-    }
-
     public ObjectConverter(Object object) {
-        this.jsonConfig = null;
         this.object = object;
     }
 
@@ -127,9 +118,11 @@ public class ObjectConverter {
     /**
      * Attempts to interpret the object as a JsonObject.
      * - If it is already a JsonObject, it is returned directly.
-     * - If it is an org.json.JSONObject or a Gson JsonObject, a new JsonObject is created.
+     * - If it is an org.json.JSONObject or a Gson JsonObject, a new JsonObject is
+     * created.
      * - If it is a JSON string, it is parsed.
      * - If it is a Map, a new JsonObject is built from it.
+     * 
      * - Otherwise, object.toString() is parsed as JSON.
      *
      * @return the corresponding JsonObject, or null if conversion fails.
