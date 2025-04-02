@@ -121,7 +121,7 @@ repositories {
 }
 
 dependencies {
-    implementation("de.eztxm:ezlib-all:1.0-BETA1.indev4")
+    implementation("de.eztxm:ezlib:1.0-BETA1.indev4")
 }
 ```
 
