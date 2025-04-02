@@ -42,7 +42,7 @@
 </dependencies>
 ```
 
-``eztxm-all`` can be replaced by any module name.
+``ezlib-all`` can be replaced by any module name.
 
 ### Gradle
 
@@ -72,8 +72,62 @@ dependencies {
 }
 ```
 
-``eztxm-all`` can be replaced by any module name.
+``ezlib-all`` can be replaced by any module name.
 
-## ToDo-List
+## Dependency Snapshots
 
-- Converter for org.json and google gson to ezlib json and in the other side
+### Maven
+
+```xml
+<repositories>
+    <repository>
+        <id>eztxm-repo</id>
+        <url>https://repo.eztxm.de/maven/snapshots/</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>de.eztxm</groupId>
+        <artifactId>ezlib</artifactId>
+        <version>1.0-BETA1.indev4</version>
+    </dependency>
+</dependencies>
+```
+
+``ezlib`` can be replaced by any module name, be careful if you use `json` you must change the groupId to `de.eztxm.ezlib.config`.
+
+### Gradle
+
+Groovy:
+
+```groovy
+repositories {
+    maven {
+        url 'https://repo.eztxm.de/maven/snapshots/'
+    }
+}
+
+dependencies {
+    implementation 'de.eztxm:ezlib:1.0-BETA1.indev4'
+}
+```
+
+Kotlin:
+
+```kotlin
+repositories {
+    maven("https://repo.eztxm.de/maven/snapshots/")
+}
+
+dependencies {
+    implementation("de.eztxm:ezlib-all:1.0-BETA1.indev4")
+}
+```
+
+``ezlib`` can be replaced by any module name, be careful if you use `json` you must change the groupId to `de.eztxm.ezlib.config`.
+
+## TODO
+
+- Converter for org.json and google gson to ezlib json and back
+- Database annotations
