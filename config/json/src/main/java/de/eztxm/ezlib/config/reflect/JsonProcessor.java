@@ -1,57 +1,61 @@
 package de.eztxm.ezlib.config.reflect;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import de.eztxm.ezlib.config.annotation.JsonClassConfig;
+import de.eztxm.ezlib.config.annotation.JsonConfig;
+import de.eztxm.ezlib.config.mapper.JsonMapper;
 import lombok.Getter;
-import lombok.SneakyThrows;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Getter
 public class JsonProcessor<T> {
 
     private final T instance;
+    private final Path file;
 
     public JsonProcessor(T instance) {
         this.instance = instance;
-        if (!instance.getClass().isAnnotationPresent(JsonClassConfig.class)) {
-            throw new IllegalStateException(
-                    "Klasse " + instance.getClass().getName() + " hat keine JsonClassConfig-Annotation!");
+
+        Class<?> clazz = instance.getClass();
+        if (!clazz.isAnnotationPresent(JsonConfig.class)) {
+            throw new IllegalStateException("Klasse " + clazz.getName() + " hat keine JsonClassConfig-Annotation!");
         }
+
+        JsonConfig annotation = clazz.getAnnotation(JsonConfig.class);
+        this.file = Paths.get(annotation.path(), annotation.fileName());
     }
 
-    @SneakyThrows
     public void saveConfiguration() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
-
-        JsonClassConfig configuration = instance.getClass().getAnnotation(JsonClassConfig.class);
-        File file = new File(configuration.path(), configuration.fileName());
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
+        try {
+            if (Files.notExists(file.getParent())) {
+                Files.createDirectories(file.getParent());
+            }
+            Files.writeString(file, JsonMapper.toJson(instance));
+        } catch (IOException e) {
+            throw new RuntimeException("Fehler beim Speichern der Konfiguration: " + e.getMessage(), e);
         }
-
-        writer.writeValue(file, instance);
     }
 
-    @SneakyThrows
     public static <T> JsonProcessor<T> loadConfiguration(Class<T> clazz) {
-        if (!clazz.isAnnotationPresent(JsonClassConfig.class)) {
-            throw new IllegalStateException(
-                    "Klasse " + clazz.getName() + " hat keine JsonClassConfig-Annotation!");
+        if (!clazz.isAnnotationPresent(JsonConfig.class)) {
+            throw new IllegalStateException("Klasse " + clazz.getName() + " hat keine JsonClassConfig-Annotation!");
         }
 
-        JsonClassConfig configuration = clazz.getAnnotation(JsonClassConfig.class);
-        File file = new File(configuration.path(), configuration.fileName());
-
-        ObjectMapper objectMapper = new ObjectMapper();
+        JsonConfig annotation = clazz.getAnnotation(JsonConfig.class);
+        Path file = Paths.get(annotation.path(), annotation.fileName());
 
         T instance;
-        if (file.exists() && file.length() > 0) {
-            instance = objectMapper.readValue(file, clazz);
-        } else {
-            instance = clazz.getDeclaredConstructor().newInstance();
+        try {
+            if (Files.exists(file) && Files.size(file) > 0) {
+                String raw = Files.readString(file);
+                instance = JsonMapper.fromJson(raw, clazz);
+            } else {
+                instance = clazz.getDeclaredConstructor().newInstance();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Fehler beim Laden der Konfiguration: " + e.getMessage(), e);
         }
 
         return new JsonProcessor<>(instance);

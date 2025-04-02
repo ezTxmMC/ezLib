@@ -1,33 +1,23 @@
 package de.eztxm.ezlib.config;
 
 import de.eztxm.ezlib.api.config.Config;
+import de.eztxm.ezlib.config.mapper.JsonMapper;
 import de.eztxm.ezlib.config.object.JsonObject;
 import de.eztxm.ezlib.config.object.ObjectConverter;
 import lombok.Getter;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * A standalone configuration class that saves and loads JSON files.
- */
 @Getter
 public class JsonConfig implements Config {
     private final Path configFolder;
-    private String configName;
-    private boolean autoSave;
-    private JsonObject customJsonObject;
+    private final String configName;
+    private final boolean autoSave;
+    private JsonObject json;
 
-    /**
-     * Constructs a new JsonConfig.
-     *
-     * @param path       Path to the configuration folder.
-     * @param configName Name of the configuration file (e.g., "config.json").
-     */
     public JsonConfig(String path, String configName) {
         this(path, configName, true);
     }
@@ -36,37 +26,42 @@ public class JsonConfig implements Config {
         this.configFolder = Paths.get(path);
         this.configName = configName;
         this.autoSave = autoSave;
+
         try {
             if (Files.notExists(configFolder)) {
                 Files.createDirectories(configFolder);
             }
-            Path configFile = configFolder.resolve(configName);
-            if (Files.notExists(configFile)) {
-                Files.createFile(configFile);
-                customJsonObject = new JsonObject();
+
+            Path file = configFolder.resolve(configName);
+
+            if (Files.notExists(file)) {
+                Files.createFile(file);
+                this.json = new JsonObject();
                 if (autoSave) {
                     save();
                 }
                 return;
             }
-            String configJson = Files.readString(configFile);
-            if (configJson.trim().isEmpty()) {
-                customJsonObject = new JsonObject();
+
+            String raw = Files.readString(file).trim();
+            if (raw.isEmpty()) {
+                this.json = new JsonObject();
                 return;
             }
+
             try {
-                customJsonObject = JsonObject.parse(configJson);
+                this.json = JsonObject.parse(raw);
             } catch (Exception e) {
-                customJsonObject = new JsonObject();
+                this.json = new JsonObject();
             }
         } catch (IOException e) {
-            throw new RuntimeException("Fehler beim Initialisieren der Konfiguration: " + e.getMessage(), e);
+            throw new RuntimeException("Fehler beim Laden der Konfiguration: " + e.getMessage(), e);
         }
     }
 
     @Override
     public void set(String key, Object value) {
-        customJsonObject.set(key, value);
+        json.put(key, value);
         if (autoSave) {
             save();
         }
@@ -74,42 +69,46 @@ public class JsonConfig implements Config {
 
     @Override
     public void remove(String key) {
-        customJsonObject.remove(key);
+        json.remove(key);
         if (autoSave) {
             save();
         }
     }
 
-    /**
-     * Returns the raw object for the given key.
-     *
-     * @param key the key.
-     * @return the underlying object.
-     */
     @Override
     public Object getObject(String key) {
-        return customJsonObject.get(key);
+        return json.get(key);
     }
 
     public ObjectConverter get(String key) {
-        return new ObjectConverter(customJsonObject.get(key));
+        return new ObjectConverter(json.get(key));
     }
 
     @Override
     public void addDefault(String key, Object value) {
-        if (getObject(key) != null) return;
+        if (json.containsKey(key)) {
+            return;
+        }
         set(key, value);
     }
 
-    /**
-     * Saves the current JSON configuration to the file.
-     */
     public void save() {
-        Path configFile = configFolder.resolve(configName);
+        Path file = configFolder.resolve(configName);
         try {
-            Files.writeString(configFile, customJsonObject.toJsonString(true));
+            Files.writeString(file, json.toJsonString());
         } catch (IOException e) {
             throw new RuntimeException("Fehler beim Speichern der Konfiguration: " + e.getMessage(), e);
+        }
+    }
+
+    public <T> T mapTo(Class<T> clazz) {
+        return JsonMapper.fromJson(json.toJsonString(), clazz);
+    }
+
+    public <T> void mapFrom(T obj) {
+        this.json = JsonObject.parse(JsonMapper.toJson(obj));
+        if (autoSave) {
+            save();
         }
     }
 }

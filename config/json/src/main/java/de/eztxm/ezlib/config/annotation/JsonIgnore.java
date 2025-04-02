@@ -6,8 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface JsonClassConfig {
-    String path() default ".";
-    String fileName() default "config.json";
+@Target(ElementType.FIELD)
+public @interface JsonIgnore {
 }

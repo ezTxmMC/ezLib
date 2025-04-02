@@ -3,27 +3,26 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>de.eztxm</groupId>
+        <artifactId>ezlib</artifactId>
+        <version>1.0-BETA1.indev5</version>
+    </parent>
 
-    <groupId>de.eztxm</groupId>
-    <artifactId>ezlib</artifactId>
-    <version>1.0-BETA1.indev5</version>
-
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>all</module>
-        <module>api</module>
-        <module>config</module>
-        <module>common</module>
-        <module>database</module>
-        <module>downloader</module>
-        <module>test</module>
-    </modules>
+    <groupId>de.eztxm.ezlib</groupId>
+    <artifactId>test</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>de.eztxm.ezlib.config</groupId>
+            <artifactId>json</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
