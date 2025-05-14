@@ -90,7 +90,7 @@ dependencies {
     <dependency>
         <groupId>de.eztxm</groupId>
         <artifactId>ezlib</artifactId>
-        <version>1.0-BETA1.indev5</version>
+        <version>1.0-BETA1.indev6</version>
     </dependency>
 </dependencies>
 ```
@@ -109,7 +109,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'de.eztxm:ezlib:1.0-BETA1.indev5'
+    implementation 'de.eztxm:ezlib:1.0-BETA1.indev6'
 }
 ```
 
@@ -121,7 +121,7 @@ repositories {
 }
 
 dependencies {
-    implementation("de.eztxm:ezlib:1.0-BETA1.indev5")
+    implementation("de.eztxm:ezlib:1.0-BETA1.indev6")
 }
 ```
 
