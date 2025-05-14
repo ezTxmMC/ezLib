@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.eztxm.ezlib</groupId>
         <artifactId>config</artifactId>
-        <version>1.0-BETA1.indev5</version>
+        <version>1.0-BETA1.indev6</version>
     </parent>
 
     <groupId>de.eztxm.ezlib.config</groupId>
