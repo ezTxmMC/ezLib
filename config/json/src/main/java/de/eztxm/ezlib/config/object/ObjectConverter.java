@@ -98,23 +98,25 @@ public class ObjectConverter {
         }
     }
 
-    public JsonArray<?> asJsonArray() {
+    public <T> JsonArray<T> asJsonArray(Class<T> clazz) {
         try {
-            if (object instanceof JsonArray jsonArray) {
-                return jsonArray;
+            if (object instanceof JsonArray<?> jsonArray) {
+                @SuppressWarnings("unchecked")
+                JsonArray<T> casted = (JsonArray<T>) jsonArray;
+                return casted;
             }
             if (object instanceof String jsonStr) {
-                return JsonArray.parse(jsonStr, Object.class);
+                return JsonArray.parse(jsonStr, clazz);
             }
             if (object instanceof List<?> list) {
-                JsonArray<Object> arr = new JsonArray<>();
+                JsonArray<T> arr = new JsonArray<>();
                 for (Object item : list) {
-                    arr.add(item);
+                    arr.add(clazz.cast(item));
                 }
                 return arr;
             }
-            JsonArray<Object> arr = new JsonArray<>();
-            arr.add(object);
+            JsonArray<T> arr = new JsonArray<>();
+            arr.add(clazz.cast(object));
             return arr;
         } catch (Exception e) {
             return null;
