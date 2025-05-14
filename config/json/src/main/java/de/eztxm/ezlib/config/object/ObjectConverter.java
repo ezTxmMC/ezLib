@@ -101,9 +101,7 @@ public class ObjectConverter {
     public <T> JsonArray<T> asJsonArray(Class<T> clazz) {
         try {
             if (object instanceof JsonArray<?> jsonArray) {
-                @SuppressWarnings("unchecked")
-                JsonArray<T> casted = (JsonArray<T>) jsonArray;
-                return casted;
+                return (JsonArray<T>) jsonArray;
             }
             if (object instanceof String jsonStr) {
                 return JsonArray.parse(jsonStr, clazz);
